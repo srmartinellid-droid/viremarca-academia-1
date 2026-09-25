@@ -1,1 +1,96 @@
-const modalities=[["FORÇA","Treino estruturado para construir potência."],["HIIT","Intervalos intensos, curtos e objetivos."],["MOBILIDADE","Movimento melhor para treinar melhor."]]; export default function Home(){return <main><header style={{position:"fixed",top:0,left:0,right:0,zIndex:10,background:"rgba(10,10,11,.94)",borderBottom:"1px solid var(--line)"}}><div className="container" style={{height:72,display:"flex",alignItems:"center",justifyContent:"space-between"}}><strong>ACADEMIA<span style={{color:"var(--accent)"}}> DEMO</span></strong><a className="btn" href="#trial">AULA GRÁTIS</a></div></header><section style={{minHeight:"88vh",display:"grid",alignItems:"end",padding:"140px 0 80px"}}><div className="container"><span className="eyebrow">PERFORMANCE BRUTA · VIREMARCA</span><h1 style={{fontSize:"clamp(44px,10vw,112px)",lineHeight:.9,maxWidth:1000,margin:"18px 0 28px",fontWeight:900}}>TREINE COMO SE FOSSE O DIA DA PROVA.</h1><p className="muted" style={{fontSize:"clamp(18px,2vw,24px)",maxWidth:650}}>Um template de academia pensado para performance, conversão e operação simples.</p><a className="btn" href="#trial" style={{marginTop:28}}>QUERO TREINAR</a></div></section><section className="container" style={{padding:"80px 0"}}><div className="eyebrow">O MÉTODO</div><div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:16,marginTop:24}}>{modalities.map(([t,d])=><article className="card" key={t} style={{padding:28}}><h2>{t}</h2><p className="muted">{d}</p></article>)}</div></section><section id="trial" style={{background:"var(--surface)",padding:"80px 0"}}><div className="container"><span className="eyebrow">AULA EXPERIMENTAL</span><h2 style={{fontSize:"clamp(36px,7vw,72px)"}}>PRIMEIRO TREINO. SEM DESCULPA.</h2><p className="muted">A gestão de leads entra nesta base do template.</p></div></section><footer className="container" style={{padding:"40px 0",borderTop:"1px solid var(--line)"}}><span className="muted">© 2026 Academia Demo VireMarca · Demo · Desenvolvido por VireMarca</span></footer></main>}
+const modalities = [
+  ["FORÇA", "Treino estruturado para construir potência."],
+  ["HIIT", "Intervalos intensos, curtos e objetivos."],
+  ["MOBILIDADE", "Movimento melhor para treinar melhor."],
+];
+export default function Home() {
+  return (
+    <main>
+      <header
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 10,
+          background: "rgba(10,10,11,.94)",
+          borderBottom: "1px solid var(--line)",
+        }}
+      >
+        <div
+          className="container"
+          style={{
+            height: 72,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <strong>
+            ACADEMIA<span style={{ color: "var(--accent)" }}> DEMO</span>
+          </strong>
+          <a className="btn" href="#trial">
+            AULA GRÁTIS
+          </a>
+        </div>
+      </header>
+      <section
+        style={{ minHeight: "88vh", display: "grid", alignItems: "end", padding: "140px 0 80px" }}
+      >
+        <div className="container">
+          <span className="eyebrow">PERFORMANCE BRUTA · VIREMARCA</span>
+          <h1
+            style={{
+              fontSize: "clamp(44px,10vw,112px)",
+              lineHeight: 0.9,
+              maxWidth: 1000,
+              margin: "18px 0 28px",
+              fontWeight: 900,
+            }}
+          >
+            TREINE COMO SE FOSSE O DIA DA PROVA.
+          </h1>
+          <p className="muted" style={{ fontSize: "clamp(18px,2vw,24px)", maxWidth: 650 }}>
+            Um template de academia pensado para performance, conversão e operação simples.
+          </p>
+          <a className="btn" href="#trial" style={{ marginTop: 28 }}>
+            QUERO TREINAR
+          </a>
+        </div>
+      </section>
+      <section className="container" style={{ padding: "80px 0" }}>
+        <div className="eyebrow">O MÉTODO</div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
+            gap: 16,
+            marginTop: 24,
+          }}
+        >
+          {modalities.map(([t, d]) => (
+            <article className="card" key={t} style={{ padding: 28 }}>
+              <h2>{t}</h2>
+              <p className="muted">{d}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section id="trial" style={{ background: "var(--surface)", padding: "80px 0" }}>
+        <div className="container">
+          <span className="eyebrow">AULA EXPERIMENTAL</span>
+          <h2 style={{ fontSize: "clamp(36px,7vw,72px)" }}>PRIMEIRO TREINO. SEM DESCULPA.</h2>
+          <p className="muted">A gestão de leads entra nesta base do template.</p>
+        </div>
+      </section>
+      <footer
+        className="container"
+        style={{ padding: "40px 0", borderTop: "1px solid var(--line)" }}
+      >
+        <span className="muted">
+          © 2026 Academia Demo VireMarca · Demo · Desenvolvido por VireMarca
+        </span>
+      </footer>
+    </main>
+  );
+}

@@ -1,1 +1,11 @@
-{"name":"Academia Demo VireMarca","short_name":"Academia Demo","theme_color":"#0A0A0B","background_color":"#0A0A0B","display":"standalone","lang":"pt-BR","icons":[{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
+{
+  "name": "Academia Demo VireMarca",
+  "short_name": "Academia Demo",
+  "theme_color": "#0A0A0B",
+  "background_color": "#0A0A0B",
+  "display": "standalone",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

@@ -1,6 +1,7 @@
 # Release Gate
+
 - [ ] lint/typecheck/build/test/playwright
-- [ ] migrations recriáveis e seed
+- [x] migrations recriáveis e seed (Postgres local + Neon dev, 25/09) — revalidar na production
 - [ ] bootstrap/troca/recuperação
 - [ ] autorização owner/staff/anônimo
 - [ ] leads/rate limit
