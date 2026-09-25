@@ -1,1 +1,65 @@
-import Link from "next/link";import {getPublicData} from "@/lib/queries/public";import {SmartImage} from "@/components/SmartImage";export default async function Page({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const d=await getPublicData();const x=d.modalities.find(m=>m.slug===slug);if(!x)return <main className="page-hero"><div className="container"><h1>Modalidade não encontrada</h1><Link className="btn" href="/modalidades">VER MODALIDADES</Link></div></main>;return <><header className="nav"><div className="container nav-inner"><Link href="/" className="brand">ACADEMIA<b> ●</b></Link><Link className="btn" href="/#trial">AULA GRÁTIS</Link></div></header><main className="page-hero"><div className="container prose"><span className="eyebrow">MODALIDADE</span><h1>{x.name}</h1>{x.imageUrl?<SmartImage src={x.imageUrl} alt={x.imageAlt??x.name} section={x.name} className="media"/>:<div className="media smart-image-fallback"><span>{x.name}</span></div>}<p>{x.description??x.summary}</p><p className="muted">{x.durationMin?x.durationMin+" minutos · ":""}Nível {x.level}</p><Link className="btn" href="/#trial">EXPERIMENTAR</Link></div></main></>}
+import type { Metadata } from "next";
+
+import { notFound } from "next/navigation";
+import Link from "next/link";
+
+import { SmartImage } from "@/components/SmartImage";
+import { getPublicData } from "@/lib/queries/public";
+
+export const revalidate = 300;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { settings, modalities } = await getPublicData();
+  const { slug } = await params;
+  const modality = modalities.find((item) => item.slug === slug);
+
+  return {
+    title: modality?.seoTitle || modality?.name || settings?.name || "Modalidade",
+    description:
+      modality?.seoDescription ||
+      modality?.summary ||
+      settings?.seoDescription ||
+      "Conheça esta modalidade.",
+  };
+}
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const { modalities } = await getPublicData();
+  const modality = modalities.find((item) => item.slug === slug);
+
+  if (!modality) {
+    notFound();
+  }
+
+  return (
+    <main className="page-hero">
+      <div className="container prose">
+        <span className="eyebrow">MODALIDADE</span>
+        <h1>{modality.name}</h1>
+        <SmartImage
+          src={modality.imageUrl}
+          alt={modality.imageAlt || modality.name}
+          section={modality.name}
+          className="media"
+        />
+        <p>{modality.description || modality.summary}</p>
+        <p className="muted">
+          {modality.durationMin ? `${modality.durationMin} minutos · ` : ""}
+          Nível {modality.level}
+        </p>
+        <Link className="btn" href="/#trial">
+          EXPERIMENTAR
+        </Link>
+      </div>
+    </main>
+  );
+}

@@ -1,1 +1,41 @@
-import Link from "next/link";import {getPublicData} from "@/lib/queries/public";const days=["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];export default async function Page(){const d=await getPublicData();return <><header className="nav"><div className="container nav-inner"><Link href="/" className="brand">ACADEMIA<b> ●</b></Link><Link className="btn" href="/#trial">AULA GRÁTIS</Link></div></header><main className="page-hero"><div className="container"><span className="eyebrow">GRADE</span><h1>HORÁRIOS</h1>{days.map((day,i)=><section key={day} className="card" style={{marginTop:16}}><h2>{day}</h2><div className="grid grid-3">{d.schedule.filter(x=>x.weekday===i).map(x=><div key={x.id}><strong>{String(x.startsAt).slice(0,5)}–{String(x.endsAt).slice(0,5)}</strong><p className="muted">{d.modalities.find(m=>m.id===x.modalityId)?.name??"Aula"}</p><small>{x.room}</small></div>)}</div></section>)}</div></main></>}
+import type { Metadata } from "next";
+
+import { ScheduleGrid } from "@/components/ScheduleGrid";
+import { getPublicData, publicMetadata } from "@/lib/queries/public";
+
+export const revalidate = 300;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { settings } = await getPublicData();
+
+  return publicMetadata(
+    settings,
+    "Horários",
+    "Consulte a grade de horários da academia.",
+  );
+}
+
+export default async function Page() {
+  const { schedule, modalities } = await getPublicData();
+
+  const items = schedule.map((item) => ({
+    id: item.id,
+    weekday: item.weekday,
+    startsAt: item.startsAt,
+    endsAt: item.endsAt,
+    room: item.room,
+    modalityName:
+      modalities.find((modality) => modality.id === item.modalityId)?.name ||
+      "Aula",
+  }));
+
+  return (
+    <main className="page-hero">
+      <div className="container">
+        <span className="eyebrow">GRADE</span>
+        <h1>HORÁRIOS</h1>
+        <ScheduleGrid items={items} />
+      </div>
+    </main>
+  );
+}

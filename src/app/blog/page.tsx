@@ -1,1 +1,49 @@
-import Link from "next/link";import {getPublicData} from "@/lib/queries/public";import {SmartImage} from "@/components/SmartImage";export default async function Page(){const d=await getPublicData();return <><header className="nav"><div className="container nav-inner"><Link href="/" className="brand">ACADEMIA<b> ●</b></Link><Link className="btn" href="/#trial">AULA GRÁTIS</Link></div></header><main className="page-hero"><div className="container"><span className="eyebrow">CONTEÚDO</span><h1>CONTEÚDO</h1><div className="grid grid-3" style={{marginTop:40}}>{d.posts.map(x=><Link className="card" href={"/blog/"+x.slug} key={x.id}>{x.coverUrl?<SmartImage src={x.coverUrl} alt={x.coverAlt??x.title} section="Blog" className="media"/>:<div className="media smart-image-fallback"><span>Blog</span></div>}<h2>{x.title}</h2><p className="muted">{x.excerpt}</p></Link>)}</div></div></main></>}
+import type { Metadata } from "next";
+
+import Link from "next/link";
+
+import { SmartImage } from "@/components/SmartImage";
+import { getPublicData, publicMetadata } from "@/lib/queries/public";
+
+export const revalidate = 300;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { settings } = await getPublicData();
+
+  return publicMetadata(
+    settings,
+    "Conteúdo",
+    "Conteúdos para treinar melhor dentro e fora da academia.",
+  );
+}
+
+export default async function Page() {
+  const { posts } = await getPublicData();
+
+  return (
+    <main className="page-hero">
+      <div className="container">
+        <span className="eyebrow">CONTEÚDO</span>
+        <h1>CONTEÚDO</h1>
+        <div className="grid grid-3 page-grid">
+          {posts.map((item) => (
+            <Link
+              className="card"
+              href={`/blog/${item.slug}`}
+              key={item.id}
+            >
+              <SmartImage
+                src={item.coverUrl}
+                alt={item.coverAlt || item.title}
+                section="Blog"
+                className="media"
+              />
+              <h2>{item.title}</h2>
+              <p className="muted">{item.excerpt}</p>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}

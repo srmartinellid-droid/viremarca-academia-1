@@ -1,1 +1,43 @@
-import Link from "next/link";import {getPublicData} from "@/lib/queries/public";import {SmartImage} from "@/components/SmartImage";export default async function Page(){const d=await getPublicData();return <><header className="nav"><div className="container nav-inner"><Link href="/" className="brand">ACADEMIA<b> ●</b></Link><Link className="btn" href="/#trial">AULA GRÁTIS</Link></div></header><main className="page-hero"><div className="container"><span className="eyebrow">AMBIENTE</span><h1>ESTRUTURA</h1><div className="grid grid-3" style={{marginTop:40}}>{d.gallery.map(x=><article key={x.id}>{x.imageUrl?<SmartImage src={x.imageUrl} alt={x.imageAlt} section={x.area} className="media"/>:<div className="media smart-image-fallback"><span>{x.area}</span></div>}<h2>{x.area}</h2><p className="muted">{x.caption}</p></article>)}</div></div></main></>}
+import type { Metadata } from "next";
+
+import { SmartImage } from "@/components/SmartImage";
+import { getPublicData, publicMetadata } from "@/lib/queries/public";
+
+export const revalidate = 300;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { settings } = await getPublicData();
+
+  return publicMetadata(
+    settings,
+    "Estrutura",
+    "Conheça os espaços e a estrutura da academia.",
+  );
+}
+
+export default async function Page() {
+  const { gallery } = await getPublicData();
+
+  return (
+    <main className="page-hero">
+      <div className="container">
+        <span className="eyebrow">AMBIENTE</span>
+        <h1>ESTRUTURA</h1>
+        <div className="grid grid-3 page-grid">
+          {gallery.map((item) => (
+            <article key={item.id}>
+              <SmartImage
+                src={item.imageUrl}
+                alt={item.imageAlt}
+                section={item.area}
+                className="media"
+              />
+              <h2>{item.area}</h2>
+              <p className="muted">{item.caption}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}

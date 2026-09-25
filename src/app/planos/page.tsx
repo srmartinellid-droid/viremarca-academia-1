@@ -1,1 +1,54 @@
-import Link from "next/link";import {getPublicData} from "@/lib/queries/public";export default async function Page(){const d=await getPublicData();return <><header className="nav"><div className="container nav-inner"><Link href="/" className="brand">ACADEMIA<b> ●</b></Link><Link className="btn" href="/#trial">AULA GRÁTIS</Link></div></header><main className="page-hero"><div className="container"><span className="eyebrow">INVESTIMENTO</span><h1>PLANOS</h1><div className="grid grid-3" style={{marginTop:40}}>{d.plans.map(x=><article className="card" key={x.id}><span className="eyebrow">{x.badge??x.period}</span><h2>{x.name}</h2><div className="price">R$ {(x.priceCents/100).toLocaleString("pt-BR",{minimumFractionDigits:2})}</div><ul>{x.benefits.map((b,i)=><li key={i}>{b}</li>)}</ul><a className="btn" href="/#trial">{x.ctaLabel??"QUERO ESTE PLANO"}</a></article>)}</div></div></main></>}
+import type { Metadata } from "next";
+
+import Link from "next/link";
+
+import { getPublicData, publicMetadata } from "@/lib/queries/public";
+
+export const revalidate = 300;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { settings } = await getPublicData();
+
+  return publicMetadata(
+    settings,
+    "Planos",
+    "Planos e condições para treinar na academia.",
+  );
+}
+
+export default async function Page() {
+  const { plans } = await getPublicData();
+
+  return (
+    <main className="page-hero">
+      <div className="container">
+        <span className="eyebrow">INVESTIMENTO</span>
+        <h1>PLANOS</h1>
+        <div className="grid grid-3 page-grid">
+          {plans.map((plan) => (
+            <article className="card" key={plan.id}>
+              <span className="eyebrow">
+                {plan.badge || plan.period}
+              </span>
+              <h2>{plan.name}</h2>
+              <div className="price">
+                R 
+                {(plan.priceCents / 100).toLocaleString("pt-BR", {
+                  minimumFractionDigits: 2,
+                })}
+              </div>
+              <ul>
+                {(plan.benefits || []).map((benefit) => (
+                  <li key={benefit}>{benefit}</li>
+                ))}
+              </ul>
+              <Link className="btn" href="/#trial">
+                {plan.ctaLabel || "QUERO ESTE PLANO"}
+              </Link>
+            </article>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}

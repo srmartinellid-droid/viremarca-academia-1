@@ -1,1 +1,44 @@
-import Link from "next/link";import {getPublicData} from "@/lib/queries/public";import {SmartImage} from "@/components/SmartImage";export default async function Page(){const d=await getPublicData();return <><header className="nav"><div className="container nav-inner"><Link href="/" className="brand">ACADEMIA<b> ●</b></Link><Link className="btn" href="/#trial">AULA GRÁTIS</Link></div></header><main className="page-hero"><div className="container"><span className="eyebrow">TIME</span><h1>EQUIPE</h1><div className="grid grid-4" style={{marginTop:40}}>{d.instructors.map(x=><article className="card" key={x.id}>{x.photoUrl?<SmartImage src={x.photoUrl} alt={x.photoAlt??x.name} section={x.name} className="media tall"/>:<div className="media tall smart-image-fallback"><span>{x.name}</span></div>}<h2>{x.name}</h2><p className="eyebrow">{x.role}</p><p className="muted">{x.bio}</p></article>)}</div></div></main></>}
+import type { Metadata } from "next";
+
+import { SmartImage } from "@/components/SmartImage";
+import { getPublicData, publicMetadata } from "@/lib/queries/public";
+
+export const revalidate = 300;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { settings } = await getPublicData();
+
+  return publicMetadata(
+    settings,
+    "Equipe",
+    "Conheça a equipe que acompanha seus treinos.",
+  );
+}
+
+export default async function Page() {
+  const { instructors } = await getPublicData();
+
+  return (
+    <main className="page-hero">
+      <div className="container">
+        <span className="eyebrow">TIME</span>
+        <h1>EQUIPE</h1>
+        <div className="grid grid-4 page-grid">
+          {instructors.map((item) => (
+            <article className="card" key={item.id}>
+              <SmartImage
+                src={item.photoUrl}
+                alt={item.photoAlt || item.name}
+                section={item.name}
+                className="media tall"
+              />
+              <h2>{item.name}</h2>
+              <p className="eyebrow">{item.role}</p>
+              <p className="muted">{item.bio}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}
