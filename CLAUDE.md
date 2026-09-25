@@ -1,0 +1,1 @@
+Leia AGENTS.md, docs/DECISOES.md e RELEASE_GATE.md antes de alterar o projeto.
