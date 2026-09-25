@@ -1,96 +1,16 @@
-const modalities = [
-  ["FORÇA", "Treino estruturado para construir potência."],
-  ["HIIT", "Intervalos intensos, curtos e objetivos."],
-  ["MOBILIDADE", "Movimento melhor para treinar melhor."],
-];
-export default function Home() {
-  return (
-    <main>
-      <header
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 10,
-          background: "rgba(10,10,11,.94)",
-          borderBottom: "1px solid var(--line)",
-        }}
-      >
-        <div
-          className="container"
-          style={{
-            height: 72,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <strong>
-            ACADEMIA<span style={{ color: "var(--accent)" }}> DEMO</span>
-          </strong>
-          <a className="btn" href="#trial">
-            AULA GRÁTIS
-          </a>
-        </div>
-      </header>
-      <section
-        style={{ minHeight: "88vh", display: "grid", alignItems: "end", padding: "140px 0 80px" }}
-      >
-        <div className="container">
-          <span className="eyebrow">PERFORMANCE BRUTA · VIREMARCA</span>
-          <h1
-            style={{
-              fontSize: "clamp(44px,10vw,112px)",
-              lineHeight: 0.9,
-              maxWidth: 1000,
-              margin: "18px 0 28px",
-              fontWeight: 900,
-            }}
-          >
-            TREINE COMO SE FOSSE O DIA DA PROVA.
-          </h1>
-          <p className="muted" style={{ fontSize: "clamp(18px,2vw,24px)", maxWidth: 650 }}>
-            Um template de academia pensado para performance, conversão e operação simples.
-          </p>
-          <a className="btn" href="#trial" style={{ marginTop: 28 }}>
-            QUERO TREINAR
-          </a>
-        </div>
-      </section>
-      <section className="container" style={{ padding: "80px 0" }}>
-        <div className="eyebrow">O MÉTODO</div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
-            gap: 16,
-            marginTop: 24,
-          }}
-        >
-          {modalities.map(([t, d]) => (
-            <article className="card" key={t} style={{ padding: 28 }}>
-              <h2>{t}</h2>
-              <p className="muted">{d}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-      <section id="trial" style={{ background: "var(--surface)", padding: "80px 0" }}>
-        <div className="container">
-          <span className="eyebrow">AULA EXPERIMENTAL</span>
-          <h2 style={{ fontSize: "clamp(36px,7vw,72px)" }}>PRIMEIRO TREINO. SEM DESCULPA.</h2>
-          <p className="muted">A gestão de leads entra nesta base do template.</p>
-        </div>
-      </section>
-      <footer
-        className="container"
-        style={{ padding: "40px 0", borderTop: "1px solid var(--line)" }}
-      >
-        <span className="muted">
-          © 2026 Academia Demo VireMarca · Demo · Desenvolvido por VireMarca
-        </span>
-      </footer>
-    </main>
-  );
-}
+import Link from "next/link";import {getPublicHome} from "@/lib/queries/public";import {SmartImage} from "@/components/SmartImage";
+const days=["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+function Section({eyebrow,title,children,alt=false}:{eyebrow:string;title:string;children:React.ReactNode;alt?:boolean}){return <section className={"section"+(alt?" alt":"")}><div className="container"><div className="section-head"><div><span className="eyebrow">{eyebrow}</span><h2>{title}</h2></div></div>{children}</div></section>}
+export default async function Home(){const d=await getPublicHome();const s=d.settings;const hero=d.hero[0];const name=s?.name??"Academia Demo";const phone=(s?.whatsapp??"").replace(/\D/g,"");const whatsapp=phone?"https://wa.me/"+phone+(s?.whatsappMessage?"?text="+encodeURIComponent(s.whatsappMessage):""):"#trial";return <main><header className="nav"><div className="container nav-inner"><Link href="/" className="brand">{name}<b> ●</b></Link><nav className="nav-links"><Link href="/modalidades">Modalidades</Link><Link href="/horarios">Horários</Link><Link href="/planos">Planos</Link><Link href="/estrutura">Estrutura</Link><Link href="/blog">Conteúdo</Link></nav><a className="btn" href={whatsapp}>AULA GRÁTIS</a></div></header>
+<section className="hero"><div className="hero-bg">{hero?.imageDesktopUrl&&<SmartImage src={hero.imageDesktopUrl} alt={hero.imageAlt} section="Hero" className="hero-media"/>}</div><div className="container hero-content"><span className="eyebrow">{s?.slogan??"Performance Bruta"}</span><h1>{hero?.title??"TREINE COMO SE FOSSE O DIA DA PROVA."}</h1><p>{hero?.subtitle??"Treino, estrutura e acompanhamento para quem quer transformar esforço em performance."}</p><div className="actions"><a className="btn" href={hero?.ctaHref??"#trial"}>{hero?.ctaLabel??"QUERO TREINAR"}</a><Link className="btn secondary" href="/planos">VER PLANOS</Link></div></div></section>
+{d.stats.length>0&&<Section eyebrow="NÚMEROS" title="RESULTADO SE MEDE." alt><div className="grid grid-4">{d.stats.map(x=><article className="card" key={x.id}><div className="stat">{x.value}<small>{x.suffix}</small></div><p className="muted">{x.label}</p></article>)}</div></Section>}
+<Section eyebrow="MÉTODO" title="TREINO PARA VIDA REAL."><div className="grid grid-3">{d.modalities.slice(0,6).map(x=><Link href={"/modalidades/"+x.slug} className="card" key={x.id}>{x.imageUrl?<SmartImage src={x.imageUrl} alt={x.imageAlt??x.name} section={x.name} className="media"/>:<div className="media smart-image-fallback"><span>{x.name}</span></div>}<h3>{x.name}</h3><p className="muted">{x.summary??x.description}</p></Link>)}</div></Section>
+<Section eyebrow="GRADE" title="ESCOLHA SEU HORÁRIO." alt><div className="schedule">{days.map((day,i)=><div key={day} className="slot"><strong>{day}</strong>{d.schedule.filter(x=>x.weekday===i).slice(0,5).map(x=><div key={x.id} style={{marginTop:8,fontSize:12}}>{String(x.startsAt).slice(0,5)}</div>)}</div>)}</div><div className="actions"><Link className="btn secondary" href="/horarios">VER GRADE COMPLETA</Link></div></Section>
+<Section eyebrow="PLANOS" title="ENTRE NO JOGO."><div className="grid grid-3">{d.plans.map(x=><article className="card" key={x.id}><span className="eyebrow">{x.badge??x.period}</span><h3>{x.name}</h3><div className="price">R$ {(x.priceCents/100).toLocaleString("pt-BR",{minimumFractionDigits:2})}<small>/mês</small></div><ul>{(x.benefits??[]).slice(0,5).map((b,i)=><li key={i}>{b}</li>)}</ul><a className="btn" href="#trial">{x.ctaLabel??"QUERO ESTE PLANO"}</a></article>)}</div></Section>
+<Section eyebrow="EQUIPE" title="QUEM PUXA O TREINO." alt><div className="grid grid-4">{d.instructors.map(x=><article className="card" key={x.id}>{x.photoUrl?<SmartImage src={x.photoUrl} alt={x.photoAlt??x.name} section={x.name} className="media tall"/>:<div className="media tall smart-image-fallback"><span>{x.name}</span></div>}<h3>{x.name}</h3><p className="muted">{x.role}</p></article>)}</div><div className="actions"><Link className="btn secondary" href="/equipe">CONHEÇA A EQUIPE</Link></div></Section>
+<Section eyebrow="ESTRUTURA" title="UM AMBIENTE FEITO PARA TREINAR."><div className="grid grid-3">{d.gallery.slice(0,6).map(x=><article key={x.id}>{x.imageUrl?<SmartImage src={x.imageUrl} alt={x.imageAlt} section={x.area} className="media"/>:<div className="media smart-image-fallback"><span>{x.area}</span></div>}<p className="muted">{x.caption??x.area}</p></article>)}</div><div className="actions"><Link className="btn secondary" href="/estrutura">VER ESTRUTURA</Link></div></Section>
+{d.posts.length>0&&<Section eyebrow="CONTEÚDO" title="TREINE TAMBÉM FORA DA ACADEMIA." alt><div className="grid grid-3">{d.posts.map(x=><Link href={"/blog/"+x.slug} className="card" key={x.id}>{x.coverUrl?<SmartImage src={x.coverUrl} alt={x.coverAlt??x.title} section="Blog" className="media"/>:<div className="media smart-image-fallback"><span>Blog</span></div>}<h3>{x.title}</h3><p className="muted">{x.excerpt}</p></Link>)}</div><div className="actions"><Link className="btn secondary" href="/blog">VER TODOS</Link></div></Section>}
+{d.testimonials.length>0&&<Section eyebrow="QUEM TREINA" title="EXPERIÊNCIAS REAIS."><div className="grid grid-3">{d.testimonials.map(x=><article className="card" key={x.id}><p>“{x.quote}”</p><strong>{x.authorName}</strong><p className="muted">{x.authorInfo}</p></article>)}</div></Section>}
+<Section eyebrow="DÚVIDAS" title="SEM ENROLAÇÃO." alt><div className="prose">{d.faqs.slice(0,8).map(x=><details className="faq" key={x.id}><summary>{x.question}</summary><p className="muted">{x.answer}</p></details>)}</div></Section>
+<section id="trial" className="section"><div className="container"><span className="eyebrow">AULA EXPERIMENTAL</span><h2>PRIMEIRO TREINO. SEM DESCULPA.</h2><p className="muted" style={{maxWidth:650}}>Escolha um horário e fale com nossa equipe.</p><div className="actions"><a className="btn" href={whatsapp}>AGENDAR AULA</a><Link className="btn secondary" href="/contato">CONTATO</Link></div></div></section>
+<footer className="footer"><div className="container"><strong>{name}</strong><p className="muted">© 2026 · Desenvolvido por VireMarca</p></div></footer></main>}

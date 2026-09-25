@@ -1,0 +1,3 @@
+"use client";
+import {useState} from "react";
+export function SmartImage({src,alt,section,className=""}:{src?:string|null;alt:string;section:string;className?:string}){const [failed,setFailed]=useState(!src);if(failed)return <div className={className+" smart-image-fallback"} role="img" aria-label={alt}><span>{section}</span></div>;return <img className={className} src={src!} alt={alt} loading="lazy" onError={()=>setFailed(true)}/>}
