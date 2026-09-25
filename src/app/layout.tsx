@@ -1,69 +1,37 @@
-import "./globals.css";
-
-import type { Metadata, Viewport } from "next";
-
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
-import { fontDisplay, fontSans } from "@/core/theme/fonts";
 import { getPublicData } from "@/lib/queries/public";
+import { fontDisplay, fontSans } from "@/core/theme/fonts";
+import "./globals.css";
 
-export const revalidate = 300;
-
-export const viewport: Viewport = {
-  themeColor: "#0A0A0B",
+export const metadata: Metadata = {
+  metadataBase: new URL("https://viremarca-academia-1.vercel.app"),
+  title: { default: "Academia Demo VireMarca", template: "%s | Academia Demo" },
+  description: "Template demonstrativo de academia criado pela VireMarca.",
+  twitter: { card: "summary_large_image" },
+  icons: { icon: "/icon.svg" },
 };
 
-export async function generateMetadata(): Promise<Metadata> {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const { settings } = await getPublicData();
-
-  return {
-    metadataBase: new URL(
-      process.env.SITE_URL || "http://localhost:3000",
-    ),
-    title: settings?.seoTitle || settings?.name || "Academia",
-    description:
-      settings?.seoDescription || "Performance, força e movimento.",
-    manifest: "/manifest.webmanifest",
-    openGraph: {
-      title: settings?.seoTitle || settings?.name || "Academia",
-      description:
-        settings?.seoDescription || "Performance, força e movimento.",
-      type: "website",
-      locale: "pt_BR",
-    },
-  };
-}
-
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const { settings } = await getPublicData();
-  const name = settings?.name || "Academia";
+  const name = settings?.name || "Academia Demo";
 
   return (
-    <html
-      lang="pt-BR"
-      className={`${fontSans.variable} ${fontDisplay.variable}`}
-    >
+    <html lang="pt-BR" className={fontSans.variable + " " + fontDisplay.variable}>
       <body>
-        <Header
-          name={name}
-          whatsapp={settings?.whatsapp}
-          whatsappMessage={settings?.whatsappMessage}
-        />
+        <div className="demo-banner">
+          <span>DEMO · Este site é uma demonstração de produto VireMarca.</span>
+          <Link href="https://www.viremarca.com.br" target="_blank" rel="noopener noreferrer">Conhecer a VireMarca</Link>
+        </div>
+        <Header name={name} whatsapp={settings?.whatsapp} whatsappMessage={settings?.whatsappMessage} />
         {children}
-        <WhatsAppFloat
-          whatsapp={settings?.whatsapp}
-          whatsappMessage={settings?.whatsappMessage}
-        />
-        <Footer
-          name={name}
-          phone={settings?.phone}
-          email={settings?.email}
-        />
+        <Footer name={name} phone={settings?.phone} email={settings?.email} />
+        <WhatsAppFloat phone={settings?.whatsapp} message={settings?.whatsappMessage} />
+        <Analytics />
       </body>
     </html>
   );

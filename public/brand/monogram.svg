@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
-  <title>VireMarca</title>
-  <rect width="64" height="64" rx="8" fill="#0A0A0B"/>
-  <path d="M13 15h10l9 25 9-25h10L36 50H28z" fill="#C6FF00"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M10 54 30 10h10l14 44H43l-5-14H25l-6 14H10Zm20-30-4 10h8l-4-10Z" fill="#C6FF00"/></svg>
