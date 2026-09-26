@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+
 import { TrialForm } from "@/components/TrialForm";
 import { getPublicData, publicMetadata } from "@/lib/queries/public";
 
@@ -6,7 +7,7 @@ export const revalidate = 300;
 
 export async function generateMetadata(): Promise<Metadata> {
   const { settings } = await getPublicData();
-  return publicMetadata(settings, "Aula experimental", "Agende sua aula experimental.");
+  return publicMetadata(settings, "Aula experimental", "Agende sua aula experimental.", "/aula-experimental");
 }
 
 export default async function Page() {

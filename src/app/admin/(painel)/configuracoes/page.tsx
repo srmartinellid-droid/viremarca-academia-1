@@ -1,48 +1,51 @@
-import { db } from "@/db";
-import { siteSettings } from "@/db/schema";
+import { getImageChoices } from "@/lib/media/public-images";
 import { requireOwner } from "@/core/auth/guards";
+import { db } from "@/db";
+import { openingExceptions, siteSettings, type OpeningHours } from "@/db/schema";
 import { SettingsForm } from "./SettingsForm";
 
 export default async function SettingsPage() {
   await requireOwner();
-  const row = (await db.select().from(siteSettings).limit(1))[0];
-  if (!row) return <p>Configurações não encontradas.</p>;
+  const [rows, exceptions, choices] = await Promise.all([
+    db.select().from(siteSettings).limit(1),
+    db.select().from(openingExceptions),
+    getImageChoices(),
+  ]);
+  const settings = rows[0];
+  if (!settings) return <p>Configurações não encontradas.</p>;
+
   return (
     <section>
-      <div className="admin-heading">
-        <span>SITE</span>
-        <h1>Configurações</h1>
-      </div>
-      <SettingsForm
-        initial={{
-          name: row.name,
-          slogan: row.slogan ?? "",
-          accentColor: row.accentColor,
-          whatsapp: row.whatsapp ?? "",
-          whatsappMessage: row.whatsappMessage ?? "",
-          phone: row.phone ?? "",
-          email: row.email ?? "",
-          street: row.address?.street ?? "",
-          number: row.address?.number ?? "",
-          district: row.address?.district ?? "",
-          city: row.address?.city ?? "",
-          state: row.address?.state ?? "",
-          zip: row.address?.zip ?? "",
-          mapEmbedUrl: row.mapEmbedUrl ?? "",
-          notice: row.notice ?? "",
-          noticeExpiresAt: row.noticeExpiresAt
-            ? row.noticeExpiresAt.toISOString().slice(0, 10)
-            : "",
-          instagram: row.social?.instagram ?? "",
-          facebook: row.social?.facebook ?? "",
-          seoTitle: row.seoTitle ?? "",
-          seoDescription: row.seoDescription ?? "",
-          seoRegion: row.seoRegion ?? "",
-          wellhubEnabled: row.wellhubEnabled,
-          totalpassEnabled: row.totalpassEnabled,
-          isDemo: row.isDemo,
-        }}
-      />
+      <div className="admin-heading"><div><span>SITE</span><h1>Configurações</h1></div></div>
+      <SettingsForm choices={choices} initial={{
+        name: settings.name,
+        slogan: settings.slogan || "",
+        accentColor: settings.accentColor,
+        whatsapp: settings.whatsapp || "",
+        whatsappMessage: settings.whatsappMessage || "",
+        phone: settings.phone || "",
+        email: settings.email || "",
+        street: settings.address?.street || "",
+        number: settings.address?.number || "",
+        district: settings.address?.district || "",
+        city: settings.address?.city || "",
+        state: settings.address?.state || "",
+        zip: settings.address?.zip || "",
+        mapEmbedUrl: settings.mapEmbedUrl || "",
+        logoLightUrl: settings.logoLightUrl || "",
+        logoDarkUrl: settings.logoDarkUrl || "",
+        monogramUrl: settings.monogramUrl || "",
+        instagram: settings.social?.instagram || "",
+        facebook: settings.social?.facebook || "",
+        seoTitle: settings.seoTitle || "",
+        seoDescription: settings.seoDescription || "",
+        seoRegion: settings.seoRegion || "",
+        wellhubEnabled: settings.wellhubEnabled,
+        totalpassEnabled: settings.totalpassEnabled,
+        isDemo: settings.isDemo,
+        openingHours: settings.openingHours || ({} as OpeningHours),
+        openingExceptions: exceptions.map((item) => ({ date: item.date, label: item.label, closed: item.closed, open: item.open?.slice(0, 5) || "", close: item.close?.slice(0, 5) || "" })),
+      }} />
     </section>
   );
 }
