@@ -34,7 +34,8 @@ export default async function HeroPage() {
                   {slide.active ? "DESATIVAR" : "ATIVAR"}
                 </button>
               </form>
-              <form action={mutateHero}><input type="hidden" name="intent" value="duplicate" /><input type="hidden" name="id" value={slide.id} /><button className="admin-icon-button" type="submit">Duplicar</button></form>\n            <ActionButtons action={mutateHero} id={slide.id} />
+              <form action={mutateHero}><input type="hidden" name="intent" value="duplicate" /><input type="hidden" name="id" value={slide.id} /><button className="admin-icon-button" type="submit">Duplicar</button></form>
+            <ActionButtons action={mutateHero} id={slide.id} />
             </div>
           </article>
         ))}
