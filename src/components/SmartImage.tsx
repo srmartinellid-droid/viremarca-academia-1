@@ -12,10 +12,7 @@ type SmartImageProps = {
 };
 
 function publicFilePath(src: string) {
-  if (!src.startsWith("/") || src.startsWith("//")) {
-    return null;
-  }
-
+  if (!src.startsWith("/") || src.startsWith("//")) return null;
   return path.join(process.cwd(), "public", src.replace(/^\/+/, ""));
 }
 
@@ -31,13 +28,21 @@ export function SmartImage({
 
   if (!src || !exists) {
     return (
-      <div className={`${className} smart-image-fallback`.trim()} role="img" aria-label={alt}>
-        <span>{section}</span>
+      <div className={(className + " smart-image-fallback").trim()} role="img" aria-label={alt}>
+        <span className="smart-image-mark" aria-hidden="true" />
+        <strong>{section}</strong>
       </div>
     );
   }
 
   return (
-    <Image className={className} src={src} alt={alt} width={1600} height={900} sizes={sizes} />
+    <Image
+      className={className}
+      src={src}
+      alt={alt}
+      width={1600}
+      height={900}
+      sizes={sizes}
+    />
   );
 }

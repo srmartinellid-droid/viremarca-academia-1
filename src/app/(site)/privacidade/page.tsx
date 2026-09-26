@@ -5,14 +5,16 @@ import { getPublicData } from "@/lib/queries/public";
 export const revalidate = 300;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { settings } = await getPublicData();
-
+  await getPublicData();
   return {
-    title: `Privacidade | ${settings?.name || "Academia"}`,
+    title: "Privacidade",
     description: "Política de privacidade e tratamento de dados.",
-    robots: {
-      index: false,
-      follow: true,
+    alternates: { canonical: "/privacidade" },
+    robots: { index: false, follow: true },
+    openGraph: {
+      title: "Privacidade",
+      description: "Política de privacidade e tratamento de dados.",
+      url: "/privacidade",
     },
   };
 }

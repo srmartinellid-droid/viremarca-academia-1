@@ -44,9 +44,7 @@ export function HeroSlideshow({ slides }: { slides: Slide[] }) {
           <span className="eyebrow">PERFORMANCE BRUTA</span>
           <h1 id="hero-title">TREINE COMO SE FOSSE O DIA DA PROVA.</h1>
           <p>Estrutura, método e equipe para transformar treino em rotina.</p>
-          <Link className="btn" href="/aula-experimental">
-            AULA EXPERIMENTAL
-          </Link>
+          <Link className="btn" href="/aula-experimental">AULA EXPERIMENTAL</Link>
         </div>
       </section>
     );
@@ -66,22 +64,28 @@ export function HeroSlideshow({ slides }: { slides: Slide[] }) {
       <div className="hero-slides" aria-live="polite">
         {safeSlides.map((item, index) => (
           <div className={"hero-slide " + (index === active ? "is-active" : "")} key={item.id}>
-            <picture>
-              {item.imageMobileUrl ? (
-                <source media="(max-width: 800px)" srcSet={item.imageMobileUrl} />
-              ) : null}
-              {item.imageDesktopUrl ? (
-                <Image
-                  src={item.imageDesktopUrl}
-                  alt={item.imageAlt}
-                  fill
-                  priority={index === 0}
-                  fetchPriority={index === 0 ? "high" : "auto"}
-                  sizes="100vw"
-                  className="hero-slide-image"
-                />
-              ) : null}
-            </picture>
+            {item.imageDesktopUrl ? (
+              <Image
+                src={item.imageDesktopUrl}
+                alt={item.imageAlt}
+                fill
+                priority={index === 0}
+                fetchPriority={index === 0 ? "high" : "auto"}
+                sizes="100vw"
+                className="hero-slide-image hero-img-desktop"
+              />
+            ) : null}
+            {item.imageMobileUrl || item.imageDesktopUrl ? (
+              <Image
+                src={item.imageMobileUrl || item.imageDesktopUrl || ""}
+                alt=""
+                fill
+                priority={index === 0}
+                sizes="100vw"
+                className="hero-slide-image hero-img-mobile"
+                aria-hidden="true"
+              />
+            ) : null}
           </div>
         ))}
       </div>
@@ -104,9 +108,7 @@ export function HeroSlideshow({ slides }: { slides: Slide[] }) {
           <Link className="btn" href={slide.ctaHref || "/aula-experimental"}>
             {slide.ctaLabel || "QUERO TREINAR"}
           </Link>
-          <Link className="btn secondary" href="/planos">
-            VER PLANOS
-          </Link>
+          <Link className="btn secondary" href="/planos">VER PLANOS</Link>
         </div>
       </div>
       {safeSlides.length > 1 ? (
