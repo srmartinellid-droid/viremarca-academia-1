@@ -54,7 +54,8 @@ export async function mutateInstructor(formData: FormData) {
     active: d.active === "on", sortOrder: d.sortOrder, updatedBy: actor.id,
   };
   if (d.id) await db.update(instructors).set(values).where(eq(instructors.id, d.id));
-  else await db.insert(instructors).values({ ...values, id: entityId, createdBy: actor.id });\n  if (current && current.photoUrl !== values.photoUrl) await deleteBlobIfUnused(current.photoUrl);
+  else await db.insert(instructors).values({ ...values, id: entityId, createdBy: actor.id });
+  if (current && current.photoUrl !== values.photoUrl) await deleteBlobIfUnused(current.photoUrl);
   await db.insert(auditLog).values({ actorId: actor.id, action: d.id ? "update" : "create", entity: "instructor", entityId });
   revalidateTag("team");
 }
