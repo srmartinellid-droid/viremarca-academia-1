@@ -7,6 +7,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import { auditLog, heroSlides } from "@/db/schema";
 import { assertRole } from "@/core/auth/guards";
+import { deleteBlobIfUnused } from "@/core/media/actions";
 
 const schema = z.object({
   id: z.string().uuid().optional(),
@@ -26,12 +27,12 @@ export async function mutateHero(formData: FormData) {
   const intent = String(formData.get("intent") || "save");
   const id = String(formData.get("id") || "");
 
-  if (intent === "delete" || intent === "up" || intent === "down" || intent === "toggle") {
+  if (intent === "duplicate") {\n    if (!current) throw new Error("Slide não encontrado.");\n    const entityId = crypto.randomUUID();\n    await db.insert(heroSlides).values({ ...current, id: entityId, title: current.title + " (cópia)", sortOrder: current.sortOrder + 1, createdBy: actor.id, updatedBy: actor.id });\n    await db.insert(auditLog).values({ actorId: actor.id, action: "duplicate", entity: "hero_slide", entityId });\n    revalidateTag("hero");\n    return;\n  }\n\n  if (intent === "delete" || intent === "up" || intent === "down" || intent === "toggle") {
     const idSchema = z.string().uuid().safeParse(id);
     if (!idSchema.success) throw new Error("ID inválido.");
     const current = (await db.select().from(heroSlides).where(eq(heroSlides.id, id)).limit(1))[0];
     if (!current) throw new Error("Slide não encontrado.");
-    if (intent === "delete") await db.delete(heroSlides).where(eq(heroSlides.id, id));
+    if (intent === "delete") { await db.delete(heroSlides).where(eq(heroSlides.id, id)); await Promise.all([deleteBlobIfUnused(current.imageDesktopUrl), deleteBlobIfUnused(current.imageMobileUrl)]); }
     if (intent === "toggle") await db.update(heroSlides).set({ active: !current.active, updatedBy: actor.id }).where(eq(heroSlides.id, id));
     if (intent === "up" || intent === "down") {
       const other = intent === "up"
@@ -57,7 +58,7 @@ export async function mutateHero(formData: FormData) {
   };
   const entityId = d.id || crypto.randomUUID();
   if (d.id) await db.update(heroSlides).set(values).where(eq(heroSlides.id, d.id));
-  else await db.insert(heroSlides).values({ ...values, id: entityId, createdBy: actor.id });
+  else await db.insert(heroSlides).values({ ...values, id: entityId, createdBy: actor.id });\n  if (current && current.imageDesktopUrl !== values.imageDesktopUrl) await deleteBlobIfUnused(current.imageDesktopUrl);\n  if (current && current.imageMobileUrl !== values.imageMobileUrl) await deleteBlobIfUnused(current.imageMobileUrl);
   await db.insert(auditLog).values({ actorId: actor.id, action: d.id ? "update" : "create", entity: "hero_slide", entityId });
   revalidateTag("hero");
 }
