@@ -9,3 +9,4 @@
 - Fontes auto-hospedadas via `@fontsource` + `next/font/local` (build não depende do Google Fonts; zero requisição externa de fonte).
 - Next 15 + React 19 + Tailwind 4 (CSS-first, `@tailwindcss/postcss`).
 - Divisão de trabalho (25/09/2026): Claude = banco, auth, segurança, validação/CI; GPT = front-end, admin UI e pacote de imagens, sobre esta base.
+- 25/09 (Claude, release vitrine+painel): rotas públicas em `src/app/(site)` (header/rodapé/faixa demo) e painel em `src/app/admin/(painel)` (sidebar + `requireStaff`); login/recuperação/trocar-senha fora do grupo. Fotos: o pacote do GPT trouxe 1 foto repetida em todos os arquivos; só o hero-01 (desktop + recorte mobile) e o fundo do CTA foram publicados; demais slots usam fallback até chegarem fotos reais. Seeds v2 aplicados na branch Neon `dev`.

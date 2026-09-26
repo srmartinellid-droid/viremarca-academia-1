@@ -51,11 +51,7 @@ const getCachedPublicHome = unstable_cache(
       testimonialRows,
       faqRows,
     ] = await Promise.all([
-      db
-        .select()
-        .from(siteSettings)
-        .where(eq(siteSettings.id, 1))
-        .limit(1),
+      db.select().from(siteSettings).where(eq(siteSettings.id, 1)).limit(1),
       db
         .select()
         .from(homeSections)
@@ -66,11 +62,7 @@ const getCachedPublicHome = unstable_cache(
         .from(heroSlides)
         .where(eq(heroSlides.active, true))
         .orderBy(asc(heroSlides.sortOrder)),
-      db
-        .select()
-        .from(stats)
-        .where(eq(stats.active, true))
-        .orderBy(asc(stats.sortOrder)),
+      db.select().from(stats).where(eq(stats.active, true)).orderBy(asc(stats.sortOrder)),
       db
         .select()
         .from(modalities)
@@ -86,11 +78,7 @@ const getCachedPublicHome = unstable_cache(
         .from(classSchedule)
         .where(eq(classSchedule.active, true))
         .orderBy(asc(classSchedule.weekday), asc(classSchedule.startsAt)),
-      db
-        .select()
-        .from(plans)
-        .where(eq(plans.active, true))
-        .orderBy(asc(plans.sortOrder)),
+      db.select().from(plans).where(eq(plans.active, true)).orderBy(asc(plans.sortOrder)),
       db
         .select()
         .from(galleryItems)
@@ -99,9 +87,7 @@ const getCachedPublicHome = unstable_cache(
       db
         .select()
         .from(posts)
-        .where(
-          and(eq(posts.status, "published"), lte(posts.publishedAt, now)),
-        )
+        .where(and(eq(posts.status, "published"), lte(posts.publishedAt, now)))
         .orderBy(desc(posts.publishedAt))
         .limit(3),
       db
@@ -109,11 +95,7 @@ const getCachedPublicHome = unstable_cache(
         .from(testimonials)
         .where(eq(testimonials.active, true))
         .orderBy(asc(testimonials.sortOrder)),
-      db
-        .select()
-        .from(faqs)
-        .where(eq(faqs.active, true))
-        .orderBy(asc(faqs.sortOrder)),
+      db.select().from(faqs).where(eq(faqs.active, true)).orderBy(asc(faqs.sortOrder)),
     ]);
 
     return {

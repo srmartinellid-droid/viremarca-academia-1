@@ -3,16 +3,11 @@ type WhatsAppFloatProps = {
   whatsappMessage?: string | null;
 };
 
-export function WhatsAppFloat({
-  whatsapp,
-  whatsappMessage,
-}: WhatsAppFloatProps) {
+export function WhatsAppFloat({ whatsapp, whatsappMessage }: WhatsAppFloatProps) {
   const phone = (whatsapp ?? "").replace(/\D/g, "");
   const href = phone
     ? `https://wa.me/${phone}${
-        whatsappMessage
-          ? `?text=${encodeURIComponent(whatsappMessage)}`
-          : ""
+        whatsappMessage ? `?text=${encodeURIComponent(whatsappMessage)}` : ""
       }`
     : "/aula-experimental";
 
