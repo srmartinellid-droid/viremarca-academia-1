@@ -1,7 +1,7 @@
 import { getImageChoices } from "@/lib/media/public-images";
 import { requireOwner } from "@/core/auth/guards";
 import { db } from "@/db";
-import { openingExceptions, siteSettings } from "@/db/schema";
+import { openingExceptions, siteSettings, type OpeningHours } from "@/db/schema";
 import { SettingsForm } from "./SettingsForm";
 
 export default async function SettingsPage() {
@@ -43,7 +43,7 @@ export default async function SettingsPage() {
         wellhubEnabled: settings.wellhubEnabled,
         totalpassEnabled: settings.totalpassEnabled,
         isDemo: settings.isDemo,
-        openingHours: settings.openingHours || undefined,
+        openingHours: settings.openingHours || ({} as OpeningHours),
         openingExceptions: exceptions.map((item) => ({ date: item.date, label: item.label, closed: item.closed, open: item.open?.slice(0, 5) || "", close: item.close?.slice(0, 5) || "" })),
       }} />
     </section>

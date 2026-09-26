@@ -28,6 +28,9 @@ export async function mutateHero(formData: FormData) {
   const id = String(formData.get("id") || "");
 
   if (intent === "duplicate") {
+    const idSchema = z.string().uuid().safeParse(id);
+    if (!idSchema.success) throw new Error("ID inválido.");
+    const current = (await db.select().from(heroSlides).where(eq(heroSlides.id, id)).limit(1))[0];
     if (!current) throw new Error("Slide não encontrado.");
     const entityId = crypto.randomUUID();
     await db.insert(heroSlides).values({ ...current, id: entityId, title: current.title + " (cópia)", sortOrder: current.sortOrder + 1, createdBy: actor.id, updatedBy: actor.id });
@@ -66,6 +69,7 @@ export async function mutateHero(formData: FormData) {
     imageAlt: d.imageAlt, active: d.active === "on", sortOrder: d.sortOrder, updatedBy: actor.id,
   };
   const entityId = d.id || crypto.randomUUID();
+  const current = d.id ? (await db.select().from(heroSlides).where(eq(heroSlides.id, d.id)).limit(1))[0] : undefined;
   if (d.id) await db.update(heroSlides).set(values).where(eq(heroSlides.id, d.id));
   else await db.insert(heroSlides).values({ ...values, id: entityId, createdBy: actor.id });
   if (current && current.imageDesktopUrl !== values.imageDesktopUrl) await deleteBlobIfUnused(current.imageDesktopUrl);
