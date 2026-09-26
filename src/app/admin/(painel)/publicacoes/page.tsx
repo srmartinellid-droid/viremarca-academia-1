@@ -1,6 +1,7 @@
 import { desc } from "drizzle-orm";
 
 import { DeleteButton } from "@/components/admin/DeleteButton";
+import { getImageChoices } from "@/lib/media/public-images";
 import { db } from "@/db";
 import { postCategories, posts } from "@/db/schema";
 import { requireStaff } from "@/core/auth/guards";
@@ -9,15 +10,16 @@ import { mutatePost } from "./actions";
 
 export default async function PublicacoesPage() {
   await requireStaff();
-  const [rows, categories] = await Promise.all([
+  const [rows, categories, choices] = await Promise.all([
     db.select().from(posts).orderBy(desc(posts.createdAt)),
     db.select().from(postCategories),
+    getImageChoices(),
   ]);
   return (
     <section>
       <div className="admin-heading">
         <div><span>CONTEÚDO</span><h1>Publicações</h1></div>
-        <PostForm categories={categories as unknown as Array<Record<string, unknown>>} />
+        <PostForm categories={categories as unknown as Array<Record<string, unknown>>} choices={choices} />
       </div>
       {rows.map((row) => (
         <article className="admin-panel" key={row.id}>
@@ -27,6 +29,7 @@ export default async function PublicacoesPage() {
           <PostForm
             post={row as unknown as Record<string, unknown>}
             categories={categories as unknown as Array<Record<string, unknown>>}
+            choices={choices}
           />
           <form action={mutatePost} className="admin-list-footer">
             <input type="hidden" name="intent" value="delete" />

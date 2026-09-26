@@ -7,6 +7,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import { auditLog, instructors } from "@/db/schema";
 import { assertRole } from "@/core/auth/guards";
+import { deleteBlobIfUnused } from "@/core/media/actions";
 
 const schema = z.object({
   id: z.string().uuid().optional(),
@@ -28,7 +29,7 @@ export async function mutateInstructor(formData: FormData) {
   const current = id ? (await db.select().from(instructors).where(eq(instructors.id, id)).limit(1))[0] : null;
   if (["delete", "up", "down", "toggle"].includes(intent)) {
     if (!current) throw new Error("Professor não encontrado.");
-    if (intent === "delete") await db.delete(instructors).where(eq(instructors.id, id));
+    if (intent === "delete") { await db.delete(instructors).where(eq(instructors.id, id)); await deleteBlobIfUnused(current.photoUrl); }
     if (intent === "toggle") await db.update(instructors).set({ active: !current.active, updatedBy: actor.id }).where(eq(instructors.id, id));
     if (intent === "up" || intent === "down") {
       const other = intent === "up"
@@ -54,6 +55,7 @@ export async function mutateInstructor(formData: FormData) {
   };
   if (d.id) await db.update(instructors).set(values).where(eq(instructors.id, d.id));
   else await db.insert(instructors).values({ ...values, id: entityId, createdBy: actor.id });
+  if (current && current.photoUrl !== values.photoUrl) await deleteBlobIfUnused(current.photoUrl);
   await db.insert(auditLog).values({ actorId: actor.id, action: d.id ? "update" : "create", entity: "instructor", entityId });
   revalidateTag("team");
 }

@@ -7,6 +7,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import { auditLog, modalities } from "@/db/schema";
 import { assertRole } from "@/core/auth/guards";
+import { deleteBlobIfUnused } from "@/core/media/actions";
 import { slugify } from "@/lib/admin/slugify";
 
 const schema = z.object({
@@ -30,7 +31,7 @@ export async function mutateModality(formData: FormData) {
   const current = id ? (await db.select().from(modalities).where(eq(modalities.id, id)).limit(1))[0] : null;
   if (intent === "delete" || intent === "up" || intent === "down" || intent === "toggle") {
     if (!current) throw new Error("Modalidade não encontrada.");
-    if (intent === "delete") await db.delete(modalities).where(eq(modalities.id, id));
+    if (intent === "delete") { await db.delete(modalities).where(eq(modalities.id, id)); await deleteBlobIfUnused(current.imageUrl); }
     if (intent === "toggle") await db.update(modalities).set({ active: !current.active, updatedBy: actor.id }).where(eq(modalities.id, id));
     if (intent === "up" || intent === "down") await swapOrder(modalities, current, intent, actor.id);
     await db.insert(auditLog).values({ actorId: actor.id, action: intent, entity: "modality", entityId: id });
@@ -48,6 +49,7 @@ export async function mutateModality(formData: FormData) {
   };
   if (d.id) await db.update(modalities).set(values).where(eq(modalities.id, d.id));
   else await db.insert(modalities).values({ ...values, id: entityId, createdBy: actor.id });
+  if (current && current.imageUrl !== values.imageUrl) await deleteBlobIfUnused(current.imageUrl);
   await db.insert(auditLog).values({ actorId: actor.id, action: d.id ? "update" : "create", entity: "modality", entityId });
   revalidateTag("modalities");
 }

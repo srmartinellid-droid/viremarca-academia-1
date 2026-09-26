@@ -7,6 +7,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import { auditLog, posts } from "@/db/schema";
 import { assertRole } from "@/core/auth/guards";
+import { deleteBlobIfUnused } from "@/core/media/actions";
 import { sanitizeRichHtml } from "@/lib/sanitize-html";
 
 const schema = z.object({
@@ -32,7 +33,10 @@ export async function mutatePost(formData: FormData) {
   if (intent === "delete") {
     if (!current) throw new Error("Publicação não encontrada.");
     await db.delete(posts).where(eq(posts.id, id));
-    await db.insert(auditLog).values({
+    await deleteBlobIfUnused(current.coverUrl);
+    if (current && current.coverUrl !== values.coverUrl) await deleteBlobIfUnused(current.coverUrl);
+
+  await db.insert(auditLog).values({
       actorId: actor.id,
       action: "delete",
       entity: "post",
