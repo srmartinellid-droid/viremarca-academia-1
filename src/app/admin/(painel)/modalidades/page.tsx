@@ -1,6 +1,7 @@
 import { asc } from "drizzle-orm";
 
 import { ActionButtons } from "@/components/admin/ActionButtons";
+import { getImageChoices } from "@/lib/media/public-images";
 import { requireStaff } from "@/core/auth/guards";
 import { db } from "@/db";
 import { modalities } from "@/db/schema";
@@ -9,12 +10,12 @@ import { ModalityForm } from "./Form";
 
 export default async function ModalidadesPage() {
   await requireStaff();
-  const rows = await db.select().from(modalities).orderBy(asc(modalities.sortOrder));
+  const [rows, choices] = await Promise.all([db.select().from(modalities).orderBy(asc(modalities.sortOrder)), getImageChoices()]);
   return (
     <section>
       <div className="admin-heading">
         <div><span>CONTEÚDO</span><h1>Modalidades</h1></div>
-        <ModalityForm />
+        <ModalityForm choices={choices} />
       </div>
       {rows.map((item) => (
         <article className="admin-panel" key={item.id}>
@@ -23,7 +24,7 @@ export default async function ModalidadesPage() {
             <span>{item.slug}</span>
             <span>{item.active ? "Ativa" : "Inativa"}</span>
           </div>
-          <ModalityForm modality={item as unknown as Record<string, unknown>} />
+          <ModalityForm modality={item as unknown as Record<string, unknown>} choices={choices} />
           <div className="admin-list-footer">
             <form action={mutateModality}>
               <input type="hidden" name="intent" value="toggle" />
