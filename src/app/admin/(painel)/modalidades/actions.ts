@@ -48,7 +48,8 @@ export async function mutateModality(formData: FormData) {
     active: d.active === "on", sortOrder: d.sortOrder, updatedBy: actor.id,
   };
   if (d.id) await db.update(modalities).set(values).where(eq(modalities.id, d.id));
-  else await db.insert(modalities).values({ ...values, id: entityId, createdBy: actor.id });\n  if (current && current.imageUrl !== values.imageUrl) await deleteBlobIfUnused(current.imageUrl);
+  else await db.insert(modalities).values({ ...values, id: entityId, createdBy: actor.id });
+  if (current && current.imageUrl !== values.imageUrl) await deleteBlobIfUnused(current.imageUrl);
   await db.insert(auditLog).values({ actorId: actor.id, action: d.id ? "update" : "create", entity: "modality", entityId });
   revalidateTag("modalities");
 }
