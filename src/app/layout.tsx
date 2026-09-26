@@ -1,36 +1,27 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { Analytics } from "@vercel/analytics/react";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { WhatsAppFloat } from "@/components/WhatsAppFloat";
-import { getPublicData } from "@/lib/queries/public";
+import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { fontDisplay, fontSans } from "@/core/theme/fonts";
 import "./globals.css";
 
+const SITE_URL = process.env.SITE_URL || "https://viremarca-academia-1.vercel.app";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://viremarca-academia-1.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   title: { default: "Academia Demo VireMarca", template: "%s | Academia Demo" },
   description: "Template demonstrativo de academia criado pela VireMarca.",
+  applicationName: "Academia Demo VireMarca",
+  manifest: "/manifest.webmanifest",
+  openGraph: { type: "website", locale: "pt_BR", siteName: "Academia Demo VireMarca" },
   twitter: { card: "summary_large_image" },
-  icons: { icon: "/icon.svg" },
 };
 
-export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const { settings } = await getPublicData();
-  const name = settings?.name || "Academia Demo";
+export const viewport: Viewport = { themeColor: "#0A0A0B" };
 
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR" className={fontSans.variable + " " + fontDisplay.variable}>
       <body>
-        <div className="demo-banner">
-          <span>DEMO · Este site é uma demonstração de produto VireMarca.</span>
-          <Link href="https://www.viremarca.com.br" target="_blank" rel="noopener noreferrer">Conhecer a VireMarca</Link>
-        </div>
-        <Header name={name} whatsapp={settings?.whatsapp} whatsappMessage={settings?.whatsappMessage} />
         {children}
-        <Footer name={name} phone={settings?.phone} email={settings?.email} />
-        <WhatsAppFloat phone={settings?.whatsapp} message={settings?.whatsappMessage} />
         <Analytics />
       </body>
     </html>

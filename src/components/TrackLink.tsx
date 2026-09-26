@@ -3,7 +3,19 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-export function TrackLink({ href, name, props, children, className }: { href: string; name: string; props?: Record<string, string | number | boolean>; children: ReactNode; className?: string }) {
+export function TrackLink({
+  href,
+  name,
+  props,
+  children,
+  className,
+}: {
+  href: string;
+  name: string;
+  props?: Record<string, string | number | boolean>;
+  children: ReactNode;
+  className?: string;
+}) {
   async function track() {
     await fetch("/api/events", {
       method: "POST",
@@ -12,5 +24,9 @@ export function TrackLink({ href, name, props, children, className }: { href: st
       keepalive: true,
     }).catch(() => undefined);
   }
-  return <Link className={className} href={href} onClick={track}>{children}</Link>;
+  return (
+    <Link className={className} href={href} onClick={track}>
+      {children}
+    </Link>
+  );
 }

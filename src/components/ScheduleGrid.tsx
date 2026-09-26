@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type ScheduleItem = {
   id: string;
@@ -16,21 +16,16 @@ type ScheduleGridProps = {
   compact?: boolean;
 };
 
-const days = [
-  "Domingo",
-  "Segunda",
-  "Terça",
-  "Quarta",
-  "Quinta",
-  "Sexta",
-  "Sábado",
-];
+const days = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
 
-export function ScheduleGrid({
-  items,
-  compact = false,
-}: ScheduleGridProps) {
+export function ScheduleGrid({ items, compact = false }: ScheduleGridProps) {
   const [activeDay, setActiveDay] = useState(1);
+  useEffect(() => {
+    const today = new Date(
+      new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }),
+    ).getDay();
+    setActiveDay(today);
+  }, []);
 
   return (
     <div className="schedule-wrap">
@@ -51,12 +46,7 @@ export function ScheduleGrid({
 
       <div className="schedule-grid">
         {(compact ? [activeDay] : days.map((_, index) => index)).map((day) => (
-          <section
-            key={day}
-            className={`schedule-day ${
-              day === activeDay ? "is-active" : ""
-            }`}
-          >
+          <section key={day} className={`schedule-day ${day === activeDay ? "is-active" : ""}`}>
             <h3>{days[day]}</h3>
             <div className="schedule-list">
               {items

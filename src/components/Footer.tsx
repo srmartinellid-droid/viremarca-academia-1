@@ -22,7 +22,9 @@ export function Footer({ name, phone, email }: FooterProps) {
         </div>
         <p className="muted footer-credit">
           © 2026 {name} · Todos os direitos reservados. ·{" "}
-          <a href="https://www.viremarca.com.br" rel="noopener noreferrer">Desenvolvido por VireMarca</a>
+          <a href="https://www.viremarca.com.br" rel="noopener noreferrer">
+            Desenvolvido por VireMarca
+          </a>
         </p>
       </div>
     </footer>

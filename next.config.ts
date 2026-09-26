@@ -14,6 +14,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [{ protocol: "https", hostname: "*.public.blob.vercel-storage.com" }],
   },
   serverExternalPackages: ["pg"],
+  // SmartImage verifica a existência do arquivo no servidor; inclui os assets nas funções (ISR).
+  outputFileTracingIncludes: { "/**": ["./public/images/**/*", "./public/brand/**/*"] },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

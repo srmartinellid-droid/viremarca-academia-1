@@ -31,24 +31,13 @@ export function SmartImage({
 
   if (!src || !exists) {
     return (
-      <div
-        className={`${className} smart-image-fallback`.trim()}
-        role="img"
-        aria-label={alt}
-      >
+      <div className={`${className} smart-image-fallback`.trim()} role="img" aria-label={alt}>
         <span>{section}</span>
       </div>
     );
   }
 
   return (
-    <Image
-      className={className}
-      src={src}
-      alt={alt}
-      width={1600}
-      height={900}
-      sizes={sizes}
-    />
+    <Image className={className} src={src} alt={alt} width={1600} height={900} sizes={sizes} />
   );
 }

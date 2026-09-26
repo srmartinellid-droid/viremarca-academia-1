@@ -44,7 +44,9 @@ export function HeroSlideshow({ slides }: { slides: Slide[] }) {
           <span className="eyebrow">PERFORMANCE BRUTA</span>
           <h1 id="hero-title">TREINE COMO SE FOSSE O DIA DA PROVA.</h1>
           <p>Estrutura, método e equipe para transformar treino em rotina.</p>
-          <Link className="btn" href="/aula-experimental">AULA EXPERIMENTAL</Link>
+          <Link className="btn" href="/aula-experimental">
+            AULA EXPERIMENTAL
+          </Link>
         </div>
       </section>
     );
@@ -65,7 +67,9 @@ export function HeroSlideshow({ slides }: { slides: Slide[] }) {
         {safeSlides.map((item, index) => (
           <div className={"hero-slide " + (index === active ? "is-active" : "")} key={item.id}>
             <picture>
-              {item.imageMobileUrl ? <source media="(max-width: 800px)" srcSet={item.imageMobileUrl} /> : null}
+              {item.imageMobileUrl ? (
+                <source media="(max-width: 800px)" srcSet={item.imageMobileUrl} />
+              ) : null}
               {item.imageDesktopUrl ? (
                 <Image
                   src={item.imageDesktopUrl}
@@ -86,7 +90,11 @@ export function HeroSlideshow({ slides }: { slides: Slide[] }) {
         <span className="eyebrow">ACADEMIA DEMO VIREMARCA</span>
         <h1 id="hero-title">
           {slide.title.split(" ").map((word, index) => (
-            <span className="hero-word" style={{ ["--word-delay" as string]: index * 60 + "ms" }} key={word + "-" + index}>
+            <span
+              className="hero-word"
+              style={{ ["--word-delay" as string]: index * 60 + "ms" }}
+              key={word + "-" + index}
+            >
               {word}{" "}
             </span>
           ))}
@@ -96,18 +104,39 @@ export function HeroSlideshow({ slides }: { slides: Slide[] }) {
           <Link className="btn" href={slide.ctaHref || "/aula-experimental"}>
             {slide.ctaLabel || "QUERO TREINAR"}
           </Link>
-          <Link className="btn secondary" href="/planos">VER PLANOS</Link>
+          <Link className="btn secondary" href="/planos">
+            VER PLANOS
+          </Link>
         </div>
       </div>
       {safeSlides.length > 1 ? (
         <div className="hero-controls" aria-label="Controles do carrossel">
-          <button type="button" onClick={() => setActive((active - 1 + safeSlides.length) % safeSlides.length)} aria-label="Slide anterior">←</button>
+          <button
+            type="button"
+            onClick={() => setActive((active - 1 + safeSlides.length) % safeSlides.length)}
+            aria-label="Slide anterior"
+          >
+            ←
+          </button>
           {safeSlides.map((item, index) => (
-            <button type="button" key={item.id} className={index === active ? "active" : ""} aria-label={"Ir para slide " + (index + 1)} aria-current={index === active} onClick={() => setActive(index)}>
+            <button
+              type="button"
+              key={item.id}
+              className={index === active ? "active" : ""}
+              aria-label={"Ir para slide " + (index + 1)}
+              aria-current={index === active}
+              onClick={() => setActive(index)}
+            >
               <span />
             </button>
           ))}
-          <button type="button" onClick={() => setActive((active + 1) % safeSlides.length)} aria-label="Próximo slide">→</button>
+          <button
+            type="button"
+            onClick={() => setActive((active + 1) % safeSlides.length)}
+            aria-label="Próximo slide"
+          >
+            →
+          </button>
         </div>
       ) : null}
     </section>

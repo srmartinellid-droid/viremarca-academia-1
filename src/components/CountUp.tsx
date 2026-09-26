@@ -40,5 +40,10 @@ export function CountUp({ value, suffix }: { value: string; suffix?: string | nu
     };
   }, [value]);
 
-  return <span ref={ref}>{display}{suffix || ""}</span>;
+  return (
+    <span ref={ref}>
+      {display}
+      {suffix || ""}
+    </span>
+  );
 }
