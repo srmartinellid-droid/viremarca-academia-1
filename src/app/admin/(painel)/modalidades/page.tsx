@@ -14,7 +14,8 @@ export default async function ModalidadesPage() {
   return (
     <section>
       <div className="admin-heading">
-        <div><span>CONTEÚDO</span><h1>Modalidades</h1></div>
+        <div><span>CONTEÚDO</span><h1>Modalidades</h1>
+        <p className="admin-page-hint">Gerencia as modalidades exibidas na home e na página de modalidades.</p></div>
         <ModalityForm choices={choices} />
       </div>
       {rows.map((item) => (

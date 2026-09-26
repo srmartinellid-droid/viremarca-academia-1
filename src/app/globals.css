@@ -739,6 +739,14 @@ h3 {
 .admin-main {
   padding: 42px;
 }
+.admin-page-hint {
+  flex-basis: 100%;
+  margin: -4px 0 4px;
+  color: #52525b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 .admin-heading {
   margin-bottom: 28px;
 }

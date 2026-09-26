@@ -72,8 +72,16 @@ export function SettingsForm({ initial, choices }: { initial: Values; choices: P
       <section className={tab === "Endereço e mapa" ? "admin-settings-tab is-active" : "admin-settings-tab"}>
         <fieldset>
           <legend>Endereço e mapa</legend>
-          {["street", "number", "district", "city", "state", "zip", "mapEmbedUrl"].map((name) => (
-            <label key={name}>{name}<input name={name} defaultValue={String(initial[name] || "")} /></label>
+          {[
+            ["street", "Rua"],
+            ["number", "Número"],
+            ["district", "Bairro"],
+            ["city", "Cidade"],
+            ["state", "Estado"],
+            ["zip", "CEP"],
+            ["mapEmbedUrl", "Link do mapa (embed)"],
+          ].map(([name, label]) => (
+            <label key={name}>{label}<input name={name} defaultValue={String(initial[name] || "")} /></label>
           ))}
         </fieldset>
       </section>

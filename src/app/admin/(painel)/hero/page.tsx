@@ -21,6 +21,7 @@ export default async function HeroPage() {
         <div>
           <span>CONTEÚDO</span>
           <h1>Hero</h1>
+        <p className="admin-page-hint">Controla os slides da capa da home. Só slides ativos aparecem no site.</p>
         </div>
         <HeroForm choices={choices} />
       </div>

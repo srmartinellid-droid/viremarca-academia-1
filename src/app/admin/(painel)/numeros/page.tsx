@@ -12,7 +12,8 @@ export default async function NumerosPage() {
   const rows = await db.select().from(stats).orderBy(asc(stats.sortOrder));
   return (
     <section>
-      <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Números</h1></div><StatForm /></div>
+      <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Números</h1>
+        <p className="admin-page-hint">Estes valores aparecem na faixa de estatísticas logo abaixo do hero, na home.</p></div><StatForm /></div>
       {rows.map((row) => (
         <article className="admin-panel" key={row.id}>
           <div className="admin-row admin-row-head"><strong>{row.value}{row.suffix}</strong><span>{row.label}</span><span>{row.active ? "Ativo" : "Inativo"}</span></div>

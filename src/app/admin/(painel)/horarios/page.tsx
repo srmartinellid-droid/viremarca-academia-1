@@ -17,7 +17,8 @@ export default async function HorariosPage() {
   const names = new Map(mods.map((m) => [m.id, m.name]));
   return (
     <section>
-      <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Horários</h1></div><ScheduleForm modalities={mods as unknown as Array<Record<string, unknown>>} instructors={team as unknown as Array<Record<string, unknown>>} /></div>
+      <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Horários</h1>
+        <p className="admin-page-hint">Organiza os horários de aulas exibidos no site, por modalidade e instrutor.</p></div><ScheduleForm modalities={mods as unknown as Array<Record<string, unknown>>} instructors={team as unknown as Array<Record<string, unknown>>} /></div>
       {rows.map((row) => (
         <article className="admin-panel" key={row.id}>
           <div className="admin-row admin-row-head"><strong>{names.get(row.modalityId)}</strong><span>{row.weekday} · {String(row.startsAt).slice(0, 5)}–{String(row.endsAt).slice(0, 5)}</span><span>{row.active ? "Ativo" : "Inativo"}</span></div>

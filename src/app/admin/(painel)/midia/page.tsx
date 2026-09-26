@@ -34,7 +34,8 @@ export default async function MediaPage() {
   add(settings[0]?.monogram || null, "Monograma");
   return (
     <section>
-      <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Mídia</h1></div></div>
+      <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Mídia</h1>
+        <p className="admin-page-hint">Centraliza os arquivos de mídia usados pelo conteúdo do site e mostra onde cada imagem está aplicada.</p></div></div>
       <MediaLibrary items={items.map((item) => ({ ...item, usedIn: usage.get(item.url) || [] }))} />
     </section>
   );

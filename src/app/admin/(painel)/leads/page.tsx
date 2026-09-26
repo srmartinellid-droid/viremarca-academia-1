@@ -53,6 +53,7 @@ export default async function AdminLeads({
       <div className="admin-heading">
         <span>CRM</span>
         <h1>Leads</h1>
+        <p className="admin-page-hint">Gerencie os contatos recebidos pela aula experimental e acompanhe o status de cada lead.</p>
         <a className="btn secondary" href="/admin/leads/export">
           EXPORTAR CSV
         </a>
