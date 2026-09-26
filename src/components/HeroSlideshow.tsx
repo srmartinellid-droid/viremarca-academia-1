@@ -15,6 +15,10 @@ type Slide = {
   imageAlt: string;
 };
 
+function demoHeroFallback(src?: string | null) {
+  return src?.includes("hero-03") ? "/images/demo/funcional.svg" : "/images/demo/musculacao.svg";
+}
+
 export function HeroSlideshow({ slides }: { slides: Slide[] }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -62,34 +66,45 @@ export function HeroSlideshow({ slides }: { slides: Slide[] }) {
       onBlur={() => setPaused(false)}
     >
       <div className="hero-slides" aria-live="polite">
-        {safeSlides.map((item, index) => (
-          <div className={"hero-slide " + (index === active ? "is-active" : "")} key={item.id}>
-            {item.imageDesktopUrl ? (
-              <Image
-                src={item.imageDesktopUrl}
-                alt={item.imageAlt}
-                fill
-                priority={index === 0}
-                fetchPriority={index === 0 ? "high" : "auto"}
-                sizes="100vw"
-                className="hero-slide-image hero-img-desktop"
-              />
-            ) : null}
-            {item.imageMobileUrl || item.imageDesktopUrl ? (
-              <Image
-                src={item.imageMobileUrl || item.imageDesktopUrl || ""}
-                alt=""
-                fill
-                priority={index === 0}
-                sizes="100vw"
-                className="hero-slide-image hero-img-mobile"
-                aria-hidden="true"
-              />
-            ) : null}
-          </div>
-        ))}
+        {safeSlides.map((item, index) => {
+          const desktopFallback = demoHeroFallback(item.imageDesktopUrl);
+          const mobileFallback = demoHeroFallback(item.imageMobileUrl || item.imageDesktopUrl);
+          return (
+            <div className={"hero-slide " + (index === active ? "is-active" : "")} key={item.id}>
+              {item.imageDesktopUrl ? (
+                <Image
+                  src={item.imageDesktopUrl}
+                  alt={item.imageAlt}
+                  fill
+                  priority={index === 0}
+                  fetchPriority={index === 0 ? "high" : "auto"}
+                  sizes="100vw"
+                  className="hero-slide-image hero-img-desktop"
+                  onError={(event) => {
+                    if (desktopFallback && event.currentTarget.src !== desktopFallback) event.currentTarget.src = desktopFallback;
+                  }}
+                />
+              ) : null}
+              {item.imageMobileUrl || item.imageDesktopUrl ? (
+                <Image
+                  src={item.imageMobileUrl || item.imageDesktopUrl || ""}
+                  alt=""
+                  fill
+                  priority={index === 0}
+                  sizes="100vw"
+                  className="hero-slide-image hero-img-mobile"
+                  aria-hidden="true"
+                  onError={(event) => {
+                    if (mobileFallback && event.currentTarget.src !== mobileFallback) event.currentTarget.src = mobileFallback;
+                  }}
+                />
+              ) : null}
+            </div>
+          );
+        })}
       </div>
       <div className="hero-overlay" />
+      <span className="hero-demo-stamp" aria-hidden="true">DEMO</span>
       <div className="container hero-content">
         <span className="eyebrow">ACADEMIA DEMO VIREMARCA</span>
         <h1 id="hero-title">
