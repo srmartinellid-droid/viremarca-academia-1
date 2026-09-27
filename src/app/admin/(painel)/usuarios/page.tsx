@@ -14,7 +14,7 @@ export default async function UsuariosPage() {
     <section>
       <div className="admin-heading"><div><span>CONTA</span><h1>Usuários</h1>
         <p className="admin-page-hint">Gerencie os usuários do painel e seus níveis de acesso.</p></div></div>
-      <AdminModal title="Novo usuário" triggerLabel="+ NOVO USUÁRIO"><UserForm /></AdminModal>
+      <AdminModal eyebrow="CADASTRO" title="Novo usuário" triggerLabel="+ NOVO USUÁRIO"><UserForm /></AdminModal>
       <div className="admin-table">
         {rows.map((item) => (
           <div className="admin-row admin-row-head" key={item.id}>

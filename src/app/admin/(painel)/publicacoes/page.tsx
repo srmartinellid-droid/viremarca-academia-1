@@ -21,7 +21,7 @@ export default async function PublicacoesPage() {
       <div className="admin-heading">
         <div><span>CONTEÚDO</span><h1>Publicações</h1>
         <p className="admin-page-hint">Cria e edita publicações do blog, usadas para conteúdo e SEO do site.</p></div>
-        <AdminModal title="Nova publicação" triggerLabel="+ NOVA PUBLICAÇÃO"><PostForm categories={categories as unknown as Array<Record<string, unknown>>} choices={choices} /></AdminModal>
+        <AdminModal eyebrow="CADASTRO" title="Nova publicação" triggerLabel="+ NOVA PUBLICAÇÃO"><PostForm categories={categories as unknown as Array<Record<string, unknown>>} choices={choices} /></AdminModal>
       </div>
       {rows.map((row) => (
         <article className="admin-panel" key={row.id}>

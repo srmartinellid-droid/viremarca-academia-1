@@ -22,7 +22,7 @@ export default async function GaleriaPage() {
       <div className="admin-heading">
         <div><span>CONTEÚDO</span><h1>Estrutura</h1>
         <p className="admin-page-hint">Gerencia as imagens da estrutura exibidas no site.</p></div>
-        <AdminModal title="Nova imagem de estrutura" triggerLabel="+ NOVA IMAGEM"><GalleryForm choices={choices} /></AdminModal>
+        <AdminModal eyebrow="CADASTRO" title="Nova imagem de estrutura" triggerLabel="+ NOVA IMAGEM"><GalleryForm choices={choices} /></AdminModal>
       </div>
       {rows.map((row) => (
         <article className="admin-panel" key={row.id}>
@@ -38,7 +38,7 @@ export default async function GaleriaPage() {
               <input type="hidden" name="id" value={row.id} />
               <button className="btn small" type="submit">{row.active ? "DESATIVAR" : "ATIVAR"}</button>
             </form>
-            <ActionButtons action={mutateGallery} id={row.id} />
+            <ActionButtons action={mutateGallery} id={row.id} canDelete={false} />
           </div>
         </article>
       ))}

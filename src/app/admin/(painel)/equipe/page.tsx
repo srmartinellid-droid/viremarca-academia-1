@@ -16,7 +16,7 @@ export default async function EquipePage() {
   return (
     <section className="admin-resource-page">
       <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Equipe</h1>
-        <p className="admin-page-hint">Gerencia os instrutores exibidos na seção de equipe e nos conteúdos relacionados às aulas.</p></div><AdminModal title="Novo profissional" triggerLabel="+ NOVO PROFISSIONAL"><InstructorForm choices={choices} /></AdminModal></div>
+        <p className="admin-page-hint">Gerencia os instrutores exibidos na seção de equipe e nos conteúdos relacionados às aulas.</p></div><AdminModal eyebrow="CADASTRO" title="Novo profissional" triggerLabel="+ NOVO PROFISSIONAL"><InstructorForm choices={choices} /></AdminModal></div>
       {rows.map((row) => (
         <article className="admin-panel" key={row.id}>
           <div className="admin-row admin-row-head"><strong>{row.name}</strong><span>{row.role}</span><span>{row.active ? "Ativo" : "Inativo"}</span></div>

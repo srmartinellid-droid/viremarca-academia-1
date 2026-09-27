@@ -15,7 +15,7 @@ export default async function FaqPage() {
   return (
     <section className="admin-resource-page">
       <div className="admin-heading"><div><span>CONTEÚDO</span><h1>FAQ</h1>
-        <p className="admin-page-hint">Gerencia perguntas e respostas exibidas na seção de dúvidas e no conteúdo de SEO.</p></div><AdminModal title="Nova pergunta" triggerLabel="+ NOVA PERGUNTA"><FaqForm /></AdminModal></div>
+        <p className="admin-page-hint">Gerencia perguntas e respostas exibidas na seção de dúvidas e no conteúdo de SEO.</p></div><AdminModal eyebrow="CADASTRO" title="Nova pergunta" triggerLabel="+ NOVA PERGUNTA"><FaqForm /></AdminModal></div>
       {rows.map((row) => (
         <article className="admin-panel" key={row.id}>
           <div className="admin-row admin-row-head"><strong>{row.question}</strong><span>{row.active ? "Ativa" : "Inativa"}</span></div>

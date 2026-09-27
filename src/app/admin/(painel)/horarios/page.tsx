@@ -20,7 +20,7 @@ export default async function HorariosPage() {
   return (
     <section className="admin-resource-page">
       <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Horários</h1>
-        <p className="admin-page-hint">Organiza os horários de aulas exibidos no site, por modalidade e instrutor.</p></div><AdminModal title="Novo horário" triggerLabel="+ NOVO HORÁRIO"><ScheduleForm modalities={mods as unknown as Array<Record<string, unknown>>} instructors={team as unknown as Array<Record<string, unknown>>} /></AdminModal></div>
+        <p className="admin-page-hint">Organiza os horários de aulas exibidos no site, por modalidade e instrutor.</p></div><AdminModal eyebrow="CADASTRO" title="Novo horário" triggerLabel="+ NOVO HORÁRIO"><ScheduleForm modalities={mods as unknown as Array<Record<string, unknown>>} instructors={team as unknown as Array<Record<string, unknown>>} /></AdminModal></div>
       {rows.map((row) => (
         <article className="admin-panel" key={row.id}>
           <div className="admin-row admin-row-head"><strong>{names.get(row.modalityId)}</strong><span>{row.weekday} · {String(row.startsAt).slice(0, 5)}–{String(row.endsAt).slice(0, 5)}</span><span>{row.active ? "Ativo" : "Inativo"}</span></div>

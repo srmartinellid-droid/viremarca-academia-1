@@ -25,7 +25,7 @@ export default async function HeroPage() {
           <h1>Hero</h1>
         <p className="admin-page-hint">Controla os slides da capa da home. Só slides ativos aparecem no site.</p>
         </div>
-        <AdminModal title="Novo slide" triggerLabel="+ NOVO SLIDE"><HeroForm choices={choices} /></AdminModal>
+        <AdminModal eyebrow="CADASTRO" title="Novo slide" triggerLabel="+ NOVO SLIDE"><HeroForm choices={choices} /></AdminModal>
       </div>
       <p className="admin-storage-note">
         Upload direto disponível após configurar o armazenamento.

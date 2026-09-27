@@ -15,7 +15,7 @@ export default async function NumerosPage() {
   return (
     <section className="admin-resource-page">
       <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Números</h1>
-        <p className="admin-page-hint">Estes valores aparecem na faixa de estatísticas logo abaixo do hero, na home.</p></div><AdminModal title="Novo número" triggerLabel="+ NOVO NÚMERO"><StatForm /></AdminModal></div>
+        <p className="admin-page-hint">Estes valores aparecem na faixa de estatísticas logo abaixo do hero, na home.</p></div><AdminModal eyebrow="CADASTRO" title="Novo número" triggerLabel="+ NOVO NÚMERO"><StatForm /></AdminModal></div>
       {rows.map((row) => (
         <article className="admin-panel" key={row.id}>
           <div className="admin-row admin-row-head"><strong>{row.value}{row.suffix}</strong><span>{row.label}</span><span>{row.active ? "Ativo" : "Inativo"}</span></div>

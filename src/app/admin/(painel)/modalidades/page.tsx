@@ -18,7 +18,7 @@ export default async function ModalidadesPage() {
       <div className="admin-heading">
         <div><span>CONTEÚDO</span><h1>Modalidades</h1>
         <p className="admin-page-hint">Gerencia as modalidades exibidas na home e na página de modalidades.</p></div>
-        <AdminModal title="Nova modalidade" triggerLabel="+ NOVA MODALIDADE"><ModalityForm choices={choices} /></AdminModal>
+        <AdminModal eyebrow="CADASTRO" title="Nova modalidade" triggerLabel="+ NOVA MODALIDADE"><ModalityForm choices={choices} /></AdminModal>
       </div>
       {rows.map((item) => (
         <article className="admin-panel" key={item.id}>
@@ -34,7 +34,7 @@ export default async function ModalidadesPage() {
               <input type="hidden" name="id" value={item.id} />
               <button className="btn small" type="submit">{item.active ? "DESATIVAR" : "ATIVAR"}</button>
             </form>
-            <ActionButtons action={mutateModality} id={item.id} />
+            <ActionButtons action={mutateModality} id={item.id} canDelete={false} />
           </div>
         </article>
       ))}

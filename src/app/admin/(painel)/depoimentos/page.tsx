@@ -15,7 +15,7 @@ export default async function DepoimentosPage() {
   return (
     <section className="admin-resource-page">
       <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Depoimentos</h1>
-        <p className="admin-page-hint">Gerencia os depoimentos exibidos nas áreas de prova social do site.</p></div><AdminModal title="Novo depoimento" triggerLabel="+ NOVO DEPOIMENTO"><TestimonialForm /></AdminModal></div>
+        <p className="admin-page-hint">Gerencia os depoimentos exibidos nas áreas de prova social do site.</p></div><AdminModal eyebrow="CADASTRO" title="Novo depoimento" triggerLabel="+ NOVO DEPOIMENTO"><TestimonialForm /></AdminModal></div>
       {rows.map((row) => (
         <article className="admin-panel" key={row.id}>
           <div className="admin-row admin-row-head"><strong>{row.authorName}</strong><span>{row.isDemo ? "Demo" : "Real"}</span><span>{row.active ? "Ativo" : "Inativo"}</span></div>

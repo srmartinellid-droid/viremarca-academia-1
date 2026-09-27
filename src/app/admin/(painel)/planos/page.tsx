@@ -15,7 +15,7 @@ export default async function PlanosPage() {
   return (
     <section className="admin-resource-page">
       <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Planos</h1>
-        <p className="admin-page-hint">Gerencia os planos e preços apresentados na página de planos e nos pontos de conversão.</p></div><AdminModal title="Novo plano" triggerLabel="+ NOVO PLANO"><PlanForm /></AdminModal></div>
+        <p className="admin-page-hint">Gerencia os planos e preços apresentados na página de planos e nos pontos de conversão.</p></div><AdminModal eyebrow="CADASTRO" title="Novo plano" triggerLabel="+ NOVO PLANO"><PlanForm /></AdminModal></div>
       {rows.map((row) => (
         <article className="admin-panel" key={row.id}>
           <div className="admin-row admin-row-head"><strong>{row.name}</strong><span>R$ {(row.priceCents / 100).toFixed(2)}</span><span>{row.highlighted ? "Destaque" : row.period}</span></div>
