@@ -16,6 +16,16 @@ function publicFilePath(src: string) {
   return path.join(process.cwd(), "public", src.replace(/^\/+/, ""));
 }
 
+function demoFallbackFor(src: string) {
+  const value = src.toLowerCase();
+  if (value.includes("/equipe/")) return "/images/demo/coach.svg";
+  if (value.includes("/estrutura/")) return "/images/demo/estrutura.svg";
+  if (value.includes("/blog/")) return "/images/demo/editorial.svg";
+  if (value.includes("/lutas") || value.includes("/muay-thai")) return "/images/demo/lutas.svg";
+  if (value.includes("/modalidades/")) return value.includes("musculacao") ? "/images/demo/musculacao.svg" : "/images/demo/funcional.svg";
+  return null;
+}
+
 export function SmartImage({
   src,
   alt,
@@ -23,10 +33,14 @@ export function SmartImage({
   className = "",
   sizes = "100vw",
 }: SmartImageProps) {
-  const filePath = src ? publicFilePath(src) : null;
-  const exists = Boolean(filePath && fs.existsSync(filePath));
+  const originalPath = src ? publicFilePath(src) : null;
+  const originalExists = Boolean(originalPath && fs.existsSync(originalPath));
+  const fallbackSrc = !originalExists && src ? demoFallbackFor(src) : null;
+  const resolvedSrc = originalExists ? src : fallbackSrc;
+  const resolvedPath = resolvedSrc ? publicFilePath(resolvedSrc) : null;
+  const exists = Boolean(resolvedPath && fs.existsSync(resolvedPath));
 
-  if (!src || !exists) {
+  if (!resolvedSrc || !exists) {
     return (
       <div className={(className + " smart-image-fallback").trim()} role="img" aria-label={alt}>
         <span className="smart-image-mark" aria-hidden="true" />
@@ -38,7 +52,7 @@ export function SmartImage({
   return (
     <Image
       className={className}
-      src={src}
+      src={resolvedSrc}
       alt={alt}
       width={1600}
       height={900}

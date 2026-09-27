@@ -5,6 +5,7 @@ import { user } from "@/db/schema";
 import { requireOwner } from "@/core/auth/guards";
 import { deactivateUser } from "./actions";
 import { UserForm } from "./Form";
+import { AdminModal } from "@/components/admin/AdminModal";
 
 export default async function UsuariosPage() {
   await requireOwner();
@@ -13,7 +14,7 @@ export default async function UsuariosPage() {
     <section>
       <div className="admin-heading"><div><span>CONTA</span><h1>Usuários</h1>
         <p className="admin-page-hint">Gerencie os usuários do painel e seus níveis de acesso.</p></div></div>
-      <UserForm />
+      <AdminModal title="Novo usuário" triggerLabel="+ NOVO USUÁRIO"><UserForm /></AdminModal>
       <div className="admin-table">
         {rows.map((item) => (
           <div className="admin-row admin-row-head" key={item.id}>

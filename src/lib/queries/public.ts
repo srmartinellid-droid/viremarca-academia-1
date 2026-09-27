@@ -99,6 +99,14 @@ export async function getPublicData() {
   return getCachedPublicHome();
 }
 
+const SITE_URL = process.env.SITE_URL || "https://viremarca-academia-1.vercel.app";
+const OG_IMAGE = {
+  url: SITE_URL + "/opengraph-image",
+  width: 1200,
+  height: 630,
+  alt: "Academia Demo VireMarca",
+};
+
 export function publicMetadata(
   settings: Awaited<ReturnType<typeof getCachedPublicHome>>["settings"],
   pageTitle: string,
@@ -106,12 +114,13 @@ export function publicMetadata(
   pathname: string,
 ): Metadata {
   const description = settings?.seoDescription || fallbackDescription;
+  const url = new URL(pathname, SITE_URL).toString();
   return {
     title: pageTitle,
     description,
-    alternates: { canonical: pathname },
-    twitter: { card: "summary_large_image", title: pageTitle, description },
-    openGraph: { title: pageTitle, description, type: "website", url: pathname },
+    alternates: { canonical: url },
+    twitter: { card: "summary_large_image", title: pageTitle, description, images: [OG_IMAGE.url] },
+    openGraph: { title: pageTitle, description, type: "website", url, images: [OG_IMAGE] },
   };
 }
 
@@ -123,8 +132,8 @@ export function homeMetadata(
   return {
     title: { absolute: title },
     description,
-    alternates: { canonical: "/" },
-    twitter: { card: "summary_large_image", title, description },
-    openGraph: { title, description, type: "website", url: "/" },
+    alternates: { canonical: SITE_URL },
+    twitter: { card: "summary_large_image", title, description, images: [OG_IMAGE.url] },
+    openGraph: { title, description, type: "website", url: SITE_URL, images: [OG_IMAGE] },
   };
 }

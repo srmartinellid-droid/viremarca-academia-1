@@ -20,11 +20,13 @@ export function ActionButtons({
     <div className="admin-inline-actions">
       <form action={action}><input type="hidden" name="intent" value="up" /><input type="hidden" name="id" value={id} /><button className="admin-icon-button" aria-label="Subir">↑</button></form>
       <form action={action}><input type="hidden" name="intent" value="down" /><input type="hidden" name="id" value={id} /><button className="admin-icon-button" aria-label="Descer">↓</button></form>
-      <form action={action} onSubmit={confirmDelete}>
-        <input type="hidden" name="intent" value="delete" />
-        <input type="hidden" name="id" value={id} />
-        {canDelete ? <button className="admin-danger-button" type="submit">Excluir</button> : null}
-      </form>
+      {canDelete ? (
+        <form action={action} onSubmit={confirmDelete}>
+          <input type="hidden" name="intent" value="delete" />
+          <input type="hidden" name="id" value={id} />
+          <button className="admin-danger-button" type="submit">Excluir</button>
+        </form>
+      ) : null}
     </div>
   );
 }

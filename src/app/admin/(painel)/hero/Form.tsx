@@ -1,14 +1,10 @@
 "use client";
 
-import { useState } from "react";
-
 import { ImageField } from "@/components/admin/ImageField";
 import type { PublicImageChoice } from "@/lib/media/public-images";
 import { mutateHero } from "./actions";
 
 export function HeroForm({ slide, choices }: { slide?: Record<string, unknown>; choices: PublicImageChoice[] }) {
-  const [open, setOpen] = useState(Boolean(slide));
-  if (!open) return <button className="btn" type="button" onClick={() => setOpen(true)}>+ NOVO SLIDE</button>;
   return (
     <form className="admin-form admin-crud-form" action={mutateHero}>
       {slide?.id ? <input type="hidden" name="id" value={String(slide.id)} /> : null}
@@ -20,7 +16,7 @@ export function HeroForm({ slide, choices }: { slide?: Record<string, unknown>; 
       <label>Título<input name="title" required defaultValue={String(slide?.title || "")} /></label>
       <label>Subtítulo<textarea name="subtitle" defaultValue={String(slide?.subtitle || "")} /></label>
       <label>CTA<input name="ctaLabel" defaultValue={String(slide?.ctaLabel || "")} /></label>
-      <label>URL CTA<input name="ctaHref" defaultValue={String(slide?.ctaHref || "")} /></label>
+      <label>URL do CTA<input name="ctaHref" defaultValue={String(slide?.ctaHref || "")} /></label>
       <ImageField name="imageDesktopUrl" altName="imageAlt" label="Imagem desktop" purpose="hero-desktop" value={String(slide?.imageDesktopUrl || "")} altValue={String(slide?.imageAlt || "")} choices={choices} required />
       <ImageField name="imageMobileUrl" altName="imageAlt" label="Imagem mobile" purpose="hero-mobile" value={String(slide?.imageMobileUrl || "")} altValue={String(slide?.imageAlt || "")} choices={choices} required />
       <label>Ordem<input name="sortOrder" type="number" min="0" defaultValue={Number(slide?.sortOrder || 0)} /></label>

@@ -1,6 +1,7 @@
 import { desc } from "drizzle-orm";
 
 import { MediaLibrary } from "@/components/admin/MediaLibrary";
+import { getPublicImageChoices } from "@/lib/media/public-images";
 import { requireStaff } from "@/core/auth/guards";
 import { db } from "@/db";
 import { galleryItems, heroSlides, instructors, media, modalities, posts, siteSettings } from "@/db/schema";
@@ -36,7 +37,7 @@ export default async function MediaPage() {
     <section>
       <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Mídia</h1>
         <p className="admin-page-hint">Centraliza os arquivos de mídia usados pelo conteúdo do site e mostra onde cada imagem está aplicada.</p></div></div>
-      <MediaLibrary items={items.map((item) => ({ ...item, usedIn: usage.get(item.url) || [] }))} />
+      <MediaLibrary items={items.map((item) => ({ ...item, source: "upload" as const, usedIn: usage.get(item.url) || [] }))} mockItems={getPublicImageChoices().map((item) => ({ ...item, source: "mock" as const, usedIn: usage.get(item.url) || [] }))} />
     </section>
   );
 }

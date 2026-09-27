@@ -12,7 +12,7 @@ const contentLinks = [
   ["/admin/hero", "Hero"], ["/admin/secoes", "Seções"], ["/admin/modalidades", "Modalidades"],
   ["/admin/horarios", "Horários"], ["/admin/planos", "Planos"], ["/admin/equipe", "Equipe"],
   ["/admin/galeria", "Estrutura"], ["/admin/publicacoes", "Publicações"], ["/admin/depoimentos", "Depoimentos"],
-  ["/admin/faq", "FAQ"], ["/admin/numeros", "Números"], ["/admin/midia", "Mídia"],
+  ["/admin/faq", "FAQ"], ["/admin/numeros", "Números"], ["/admin/midia", "Biblioteca de mídia"],
 ] as const;
 
 export function AdminSidebar({ email, role }: Props) {

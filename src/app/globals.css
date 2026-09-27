@@ -1750,3 +1750,14 @@ body {
   .opening-hours-row,
   .exception-row { grid-template-columns: 1fr 1fr; }
 }
+
+
+/* Admin CRUD modals */
+.admin-modal{width:min(900px,calc(100vw - 32px));max-width:900px;max-height:min(90vh,920px);margin:auto;padding:0;border:1px solid #d4d4d8;border-radius:16px;background:#fafaf9;color:#18181b;box-shadow:0 24px 80px rgb(0 0 0 / 28%)}
+.admin-modal::backdrop{background:rgb(24 24 27 / 62%);backdrop-filter:blur(3px)}
+.admin-modal-header{position:sticky;top:0;z-index:2;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:20px 24px;background:#fafaf9;border-bottom:1px solid #e4e4e7}
+.admin-modal-header span{color:#71717a;font-size:11px;font-weight:900;letter-spacing:.12em}.admin-modal-header h2{margin:4px 0 0;font-size:24px}
+.admin-modal-body{padding:24px;overflow:auto;max-height:calc(90vh - 150px)}.admin-modal-body .admin-form{max-width:none;padding:0;border:0;background:transparent}.admin-modal-body .admin-form .btn{grid-column:1/-1}
+.admin-modal-footer{display:flex;justify-content:flex-end;padding:14px 24px 20px;border-top:1px solid #e4e4e7;background:#fafaf9}.admin-field-help{margin:0 0 4px;color:#52525b;font-size:13px;line-height:1.55}
+.admin-resource-page .admin-panel .admin-list-footer{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.admin-resource-page .admin-panel .admin-list-footer>.admin-modal{margin-left:auto}
+@media(max-width:700px){.admin-modal{width:calc(100vw - 16px);max-height:94vh}.admin-modal-header,.admin-modal-body{padding:16px}.admin-modal-body{max-height:calc(94vh - 128px)}.admin-modal-footer{padding:12px 16px 16px}}
