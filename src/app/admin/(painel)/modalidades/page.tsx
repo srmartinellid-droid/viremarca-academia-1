@@ -7,6 +7,8 @@ import { db } from "@/db";
 import { modalities } from "@/db/schema";
 import { mutateModality } from "./actions";
 import { ModalityForm } from "./Form";
+import { AdminModal } from "@/components/admin/AdminModal";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 
 export default async function ModalidadesPage() {
   await requireStaff();
@@ -16,7 +18,7 @@ export default async function ModalidadesPage() {
       <div className="admin-heading">
         <div><span>CONTEÚDO</span><h1>Modalidades</h1>
         <p className="admin-page-hint">Gerencia as modalidades exibidas na home e na página de modalidades.</p></div>
-        <ModalityForm choices={choices} />
+        <AdminModal eyebrow="CADASTRO" title="Nova modalidade" triggerLabel="+ NOVA MODALIDADE"><ModalityForm choices={choices} /></AdminModal>
       </div>
       {rows.map((item) => (
         <article className="admin-panel" key={item.id}>
@@ -25,14 +27,14 @@ export default async function ModalidadesPage() {
             <span>{item.slug}</span>
             <span>{item.active ? "Ativa" : "Inativa"}</span>
           </div>
-          <ModalityForm modality={item as unknown as Record<string, unknown>} choices={choices} />
+          <AdminModal title="Editar modalidade" triggerLabel="Editar modalidade" footer={<form action={mutateModality}><input type="hidden" name="intent" value="delete" /><input type="hidden" name="id" value={item.id} /><DeleteButton /></form>}><ModalityForm modality={item as unknown as Record<string, unknown>} choices={choices} /></AdminModal>
           <div className="admin-list-footer">
             <form action={mutateModality}>
               <input type="hidden" name="intent" value="toggle" />
               <input type="hidden" name="id" value={item.id} />
               <button className="btn small" type="submit">{item.active ? "DESATIVAR" : "ATIVAR"}</button>
             </form>
-            <ActionButtons action={mutateModality} id={item.id} />
+            <ActionButtons action={mutateModality} id={item.id} canDelete={false} />
           </div>
         </article>
       ))}

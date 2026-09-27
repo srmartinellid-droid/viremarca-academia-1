@@ -47,15 +47,16 @@ export function SettingsForm({ initial, choices }: { initial: Values; choices: P
 
       <section className={tab === "Identidade" ? "admin-settings-tab is-active" : "admin-settings-tab"}>
         <fieldset>
-          <legend>Identidade</legend>
+          <legend>Identidade visual</legend>
+          <p className="admin-field-help">Logo para fundo escuro: usada sobre fundos escuros. Logo para fundo claro: usada sobre fundos claros. Símbolo / monograma: versão compacta da marca para espaços pequenos, como ícone ou assinatura.</p>
           <label>Nome da academia<input name="name" required defaultValue={String(initial.name || "")} /></label>
           <label>Slogan<input name="slogan" defaultValue={String(initial.slogan || "")} /></label>
           <label>Cor de destaque<input name="accentColor" defaultValue={String(initial.accentColor || "#C6FF00")} /></label>
           <div className="admin-accent-preview" style={{ background: String(initial.accentColor || "#C6FF00") }}>Prévia da cor de destaque</div>
           <p className="admin-image-hint">Verifique contraste AA antes de publicar.</p>
-          <ImageField name="logoLightUrl" altName="logoLightAlt" label="Logo claro" purpose="logo" value={String(initial.logoLightUrl || "")} altValue="Logo claro da academia" choices={choices} />
-          <ImageField name="logoDarkUrl" altName="logoDarkAlt" label="Logo escuro" purpose="logo" value={String(initial.logoDarkUrl || "")} altValue="Logo escuro da academia" choices={choices} />
-          <ImageField name="monogramUrl" altName="monogramAlt" label="Monograma" purpose="logo" value={String(initial.monogramUrl || "")} altValue="Monograma da academia" choices={choices} />
+          <ImageField name="logoLightUrl" altName="logoLightAlt" label="Logo para fundo escuro" purpose="logo" value={String(initial.logoLightUrl || "")} altValue="Logo claro da academia" choices={choices} />
+          <ImageField name="logoDarkUrl" altName="logoDarkAlt" label="Logo para fundo claro" purpose="logo" value={String(initial.logoDarkUrl || "")} altValue="Logo escuro da academia" choices={choices} />
+          <ImageField name="monogramUrl" altName="monogramAlt" label="Símbolo / monograma" purpose="logo" value={String(initial.monogramUrl || "")} altValue="Monograma da academia" choices={choices} />
         </fieldset>
       </section>
 

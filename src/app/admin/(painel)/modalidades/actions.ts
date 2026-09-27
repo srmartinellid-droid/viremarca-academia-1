@@ -39,7 +39,7 @@ export async function mutateModality(formData: FormData) {
     return;
   }
   const parsed = schema.safeParse(Object.fromEntries(formData.entries()));
-  if (!parsed.success) throw new Error("Dados da modalidade inválidos.");
+  if (!parsed.success) { console.error("mutateModality validation", parsed.error.flatten().fieldErrors); throw new Error("Não foi possível salvar a modalidade. Verifique os campos preenchidos."); }
   const d = parsed.data;
   const entityId = d.id || crypto.randomUUID();
   const values = {
