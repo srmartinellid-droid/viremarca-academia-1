@@ -9,7 +9,7 @@ export default async function SiteLayout({ children }: Readonly<{ children: Reac
   const name = settings?.name || "Academia Demo";
 
   return (
-    <>
+    <div style={{ "--accent": settings?.accentColor || "#C6FF00" } as React.CSSProperties}>
       {settings?.isDemo !== false ? <DemoBanner /> : null}
       <Header
         name={name}
@@ -19,6 +19,6 @@ export default async function SiteLayout({ children }: Readonly<{ children: Reac
       {children}
       <Footer name={name} phone={settings?.phone} email={settings?.email} />
       <WhatsAppFloat whatsapp={settings?.whatsapp} whatsappMessage={settings?.whatsappMessage} />
-    </>
+    </div>
   );
 }
