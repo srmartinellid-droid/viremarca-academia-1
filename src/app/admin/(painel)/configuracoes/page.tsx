@@ -36,6 +36,8 @@ export default async function SettingsPage() {
         logoLightUrl: settings.logoLightUrl || "",
         logoDarkUrl: settings.logoDarkUrl || "",
         monogramUrl: settings.monogramUrl || "",
+        notice: settings.notice || "",
+        noticeExpiresAt: settings.noticeExpiresAt ? new Date(settings.noticeExpiresAt).toISOString().slice(0, 10) : "",
         instagram: settings.social?.instagram || "",
         facebook: settings.social?.facebook || "",
         seoTitle: settings.seoTitle || "",
