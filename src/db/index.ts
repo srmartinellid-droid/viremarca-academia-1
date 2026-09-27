@@ -11,8 +11,15 @@ import * as schema from "./schema";
 const globalForDb = globalThis as unknown as { __academiaPool?: Pool };
 
 function createPool() {
-  const connectionString = process.env.DATABASE_URL;
-  if (!connectionString) throw new Error("DATABASE_URL não definida");
+  const rawConnectionString = process.env.DATABASE_URL;
+  if (!rawConnectionString) throw new Error("DATABASE_URL não definida");
+  // pg v9 will adopt libpq semantics for legacy SSL modes. Normalize the
+  // common Neon/Vercel connection-string aliases now to keep runtime behavior
+  // explicit and remove the deprecation warning without changing TLS policy.
+  const connectionString = rawConnectionString.replace(
+    /([?&]sslmode=)(prefer|require|verify-ca)(?=(&|$))/i,
+    "$1verify-full",
+  );
   return new Pool({
     connectionString,
     max: 5,
