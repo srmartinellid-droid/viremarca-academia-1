@@ -11,7 +11,7 @@ export default async function NumerosPage() {
   await requireStaff();
   const rows = await db.select().from(stats).orderBy(asc(stats.sortOrder));
   return (
-    <section>
+    <section className="admin-resource-page">
       <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Números</h1>
         <p className="admin-page-hint">Estes valores aparecem na faixa de estatísticas logo abaixo do hero, na home.</p></div><StatForm /></div>
       {rows.map((row) => (

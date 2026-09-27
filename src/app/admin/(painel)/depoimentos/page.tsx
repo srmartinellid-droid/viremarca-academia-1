@@ -11,7 +11,7 @@ export default async function DepoimentosPage() {
   await requireStaff();
   const rows = await db.select().from(testimonials).orderBy(asc(testimonials.sortOrder));
   return (
-    <section>
+    <section className="admin-resource-page">
       <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Depoimentos</h1>
         <p className="admin-page-hint">Gerencia os depoimentos exibidos nas áreas de prova social do site.</p></div><TestimonialForm /></div>
       {rows.map((row) => (

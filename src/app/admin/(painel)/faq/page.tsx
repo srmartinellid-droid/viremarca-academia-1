@@ -11,7 +11,7 @@ export default async function FaqPage() {
   await requireStaff();
   const rows = await db.select().from(faqs).orderBy(asc(faqs.sortOrder));
   return (
-    <section>
+    <section className="admin-resource-page">
       <div className="admin-heading"><div><span>CONTEÚDO</span><h1>FAQ</h1>
         <p className="admin-page-hint">Gerencia perguntas e respostas exibidas na seção de dúvidas e no conteúdo de SEO.</p></div><FaqForm /></div>
       {rows.map((row) => (

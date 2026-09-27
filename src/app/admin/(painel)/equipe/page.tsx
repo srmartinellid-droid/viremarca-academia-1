@@ -12,7 +12,7 @@ export default async function EquipePage() {
   await requireStaff();
   const [rows, choices] = await Promise.all([db.select().from(instructors).orderBy(asc(instructors.sortOrder)), getImageChoices()]);
   return (
-    <section>
+    <section className="admin-resource-page">
       <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Equipe</h1>
         <p className="admin-page-hint">Gerencia os instrutores exibidos na seção de equipe e nos conteúdos relacionados às aulas.</p></div><InstructorForm choices={choices} /></div>
       {rows.map((row) => (

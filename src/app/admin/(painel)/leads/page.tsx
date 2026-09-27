@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { and, count, desc, eq, type SQL } from "drizzle-orm";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 import { db } from "@/db";
 import { leads, modalities } from "@/db/schema";
 import { requireStaff } from "@/core/auth/guards";
@@ -116,6 +117,11 @@ export default async function AdminLeads({
                   >
                     WhatsApp
                   </a>
+                  <form action={updateLeadStatus}>
+                    <input type="hidden" name="intent" value="delete" />
+                    <input type="hidden" name="id" value={lead.id} />
+                    <DeleteButton />
+                  </form>
                 </form>
               </article>
             );

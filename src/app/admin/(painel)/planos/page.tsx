@@ -11,7 +11,7 @@ export default async function PlanosPage() {
   await requireStaff();
   const rows = await db.select().from(plans).orderBy(asc(plans.sortOrder));
   return (
-    <section>
+    <section className="admin-resource-page">
       <div className="admin-heading"><div><span>CONTEÚDO</span><h1>Planos</h1>
         <p className="admin-page-hint">Gerencia os planos e preços apresentados na página de planos e nos pontos de conversão.</p></div><PlanForm /></div>
       {rows.map((row) => (

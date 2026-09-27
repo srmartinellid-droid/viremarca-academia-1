@@ -16,7 +16,7 @@ export default async function HeroPage() {
   ]);
 
   return (
-    <section>
+    <section className="admin-resource-page admin-hero-page">
       <div className="admin-heading">
         <div>
           <span>CONTEÚDO</span>
