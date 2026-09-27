@@ -1761,3 +1761,375 @@ body {
 .admin-modal-footer{display:flex;justify-content:flex-end;padding:14px 24px 20px;border-top:1px solid #e4e4e7;background:#fafaf9}.admin-field-help{margin:0 0 4px;color:#52525b;font-size:13px;line-height:1.55}
 .admin-resource-page .admin-panel .admin-list-footer{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.admin-resource-page .admin-panel .admin-list-footer>.admin-modal{margin-left:auto}
 @media(max-width:700px){.admin-modal{width:calc(100vw - 16px);max-height:94vh}.admin-modal-header,.admin-modal-body{padding:16px}.admin-modal-body{max-height:calc(94vh - 128px)}.admin-modal-footer{padding:12px 16px 16px}}
+
+
+/* ---- Refinamento final: direção de arte + UX de produto ---- */
+
+/* Sidebar desktop: cabeçalho e usuário ficam estáveis; somente a navegação rola. */
+.admin-sidebar {
+  overflow: hidden;
+  min-height: 100vh;
+  border-right: 1px solid #242428;
+  box-shadow: 8px 0 30px rgb(0 0 0 / 7%);
+}
+.admin-sidebar > strong {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 4px;
+  color: #f4f4f5;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+}
+.admin-sidebar nav {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px 4px 10px 0;
+  scrollbar-width: thin;
+  scrollbar-color: #3f3f46 transparent;
+}
+.admin-sidebar nav::-webkit-scrollbar { width: 6px; }
+.admin-sidebar nav::-webkit-scrollbar-track { background: transparent; }
+.admin-sidebar nav::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 999px; }
+.admin-sidebar nav span {
+  display: block;
+  padding: 10px 10px 4px;
+  margin-top: 10px;
+}
+.admin-sidebar nav span:first-child { margin-top: 0; }
+.admin-sidebar nav a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin: 2px 0;
+  padding: 0 12px 0 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  transition: background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
+}
+.admin-sidebar nav a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  bottom: 9px;
+  width: 3px;
+  border-radius: 0 4px 4px 0;
+  background: transparent;
+  transition: background .18s ease;
+}
+.admin-sidebar nav a:hover {
+  background: #1b1b1f;
+  border-color: #2b2b30;
+  color: #c6ff00;
+  transform: translateX(1px);
+}
+.admin-sidebar nav a.is-active {
+  background: linear-gradient(90deg, #202024 0%, #18181b 100%);
+  border-color: #303038;
+  color: #c6ff00;
+  font-weight: 800;
+}
+.admin-sidebar nav a.is-active::before { background: #c6ff00; }
+.admin-user {
+  flex: 0 0 auto;
+  margin-top: 0;
+  padding: 12px 4px 0;
+  border-top: 1px solid #2a2a2f;
+}
+.admin-user span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Painel: menos "CRUD cru", mais produto. */
+.admin-main {
+  min-width: 0;
+  padding: clamp(28px, 4vw, 48px);
+}
+.admin-resource-page {
+  gap: 18px;
+}
+.admin-resource-page > .admin-heading {
+  position: relative;
+  padding-bottom: 8px;
+}
+.admin-resource-page > .admin-heading::after {
+  content: "";
+  display: block;
+  width: 54px;
+  height: 3px;
+  margin-top: 2px;
+  background: #c6ff00;
+  box-shadow: 0 0 18px rgb(198 255 0 / 28%);
+}
+.admin-resource-page > .admin-panel {
+  position: relative;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgb(24 24 27 / 5%);
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.admin-resource-page > .admin-panel:hover {
+  transform: translateY(-2px);
+  border-color: #d4d4d8;
+  box-shadow: 0 14px 34px rgb(24 24 27 / 8%);
+}
+.admin-resource-page .admin-row-head strong {
+  color: #18181b;
+  font-size: 16px;
+  letter-spacing: -.01em;
+}
+.admin-resource-page .admin-row-head span {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #f4f4f5;
+  color: #52525b;
+  font-size: 11px;
+  font-weight: 800;
+}
+.admin-resource-page .admin-list-footer {
+  padding-top: 14px;
+  border-top: 1px solid #f0f0f2;
+}
+.admin-resource-page .admin-list-footer .btn.small {
+  background: #18181b;
+  color: #fff;
+  border-radius: 8px;
+}
+.admin-resource-page .admin-list-footer .btn.small:hover {
+  background: #27272a;
+}
+.admin-icon-button,
+.admin-danger-button {
+  transition: background .18s ease, border-color .18s ease, color .18s ease, transform .18s ease;
+}
+.admin-icon-button:hover {
+  background: #f4f4f5;
+  border-color: #a1a1aa;
+  transform: translateY(-1px);
+}
+.admin-danger-button:hover {
+  background: #fff1f2;
+  border-color: #fda4af;
+}
+.admin-shell .btn {
+  border-radius: 8px;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.admin-shell .btn:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgb(24 24 27 / 10%);
+}
+.admin-shell .btn:not(:disabled):active,
+.admin-icon-button:active,
+.admin-danger-button:active {
+  transform: translateY(0);
+}
+.admin-shell input,
+.admin-shell select,
+.admin-shell textarea {
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.admin-shell input:focus,
+.admin-shell select:focus,
+.admin-shell textarea:focus {
+  border-color: #84cc16;
+  box-shadow: 0 0 0 3px rgb(132 204 22 / 12%);
+}
+
+/* Configurações: cada grupo se comporta como um cartão de edição. */
+.admin-settings-form {
+  gap: 18px;
+}
+.admin-tabs {
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgb(24 24 27 / 5%);
+}
+.admin-tabs button {
+  transition: background .18s ease, color .18s ease, transform .18s ease;
+}
+.admin-tabs button:hover:not(.is-active) {
+  background: #f4f4f5;
+  color: #18181b;
+}
+.admin-settings-tab fieldset {
+  margin: 0;
+  padding: 24px;
+  border: 1px solid #e4e4e7;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgb(24 24 27 / 5%);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.admin-settings-tab fieldset > legend,
+.admin-settings-tab fieldset > p,
+.admin-settings-tab fieldset > .admin-image-field,
+.admin-settings-tab fieldset > .admin-accent-preview,
+.admin-settings-tab fieldset > .admin-image-hint,
+.admin-settings-tab fieldset > .opening-hours-editor,
+.admin-settings-tab fieldset > .exception-row,
+.admin-settings-tab fieldset > .admin-danger-button,
+.admin-settings-tab fieldset > .admin-icon-button {
+  grid-column: 1 / -1;
+}
+.admin-settings-tab fieldset > legend {
+  margin-bottom: -2px;
+  color: #18181b;
+  font-size: 16px;
+  font-weight: 900;
+}
+.admin-settings-tab fieldset > p {
+  margin-top: -4px;
+}
+.admin-settings-tab .admin-image-field {
+  padding: 16px;
+  border: 1px solid #ededf0;
+  border-radius: 12px;
+  background: #fafaf9;
+}
+.admin-settings-tab .admin-image-preview {
+  background: linear-gradient(135deg, #f4f4f5, #e7e7e9);
+}
+.admin-settings-tab .admin-accent-preview {
+  box-shadow: inset 0 0 0 1px rgb(24 24 27 / 10%);
+}
+.admin-sticky-save {
+  box-shadow: 0 -10px 30px rgb(24 24 27 / 6%);
+}
+
+/* Biblioteca: separar visualmente demo de upload real. */
+.media-library-card {
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.media-library-card:hover {
+  transform: translateY(-2px);
+  border-color: #d4d4d8;
+  box-shadow: 0 12px 28px rgb(24 24 27 / 7%);
+}
+.media-library-card small {
+  color: #71717a;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+/* Modal: janela de trabalho, não "popup genérico". */
+.admin-modal {
+  border-color: #27272a;
+  box-shadow: 0 30px 100px rgb(0 0 0 / 36%);
+}
+.admin-modal-header h2 {
+  font-weight: 900;
+  letter-spacing: -.025em;
+}
+.admin-modal-footer {
+  justify-content: space-between;
+}
+
+/* Home: impacto sem virar neon. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 72% 42%, rgb(198 255 0 / 13%) 0%, transparent 28%),
+    radial-gradient(ellipse at 12% 84%, rgb(198 255 0 / 8%) 0%, transparent 26%),
+    linear-gradient(180deg, transparent 52%, rgb(0 0 0 / 34%) 100%);
+  mix-blend-mode: screen;
+}
+.hero-overlay {
+  background:
+    linear-gradient(90deg, rgb(7 7 8 / 90%) 0%, rgb(10 10 11 / 68%) 42%, rgb(10 10 11 / 14%) 100%),
+    linear-gradient(180deg, transparent 45%, rgb(0 0 0 / 48%) 100%);
+}
+.hero h1 {
+  text-shadow: 0 8px 36px rgb(0 0 0 / 48%);
+}
+.hero .btn {
+  box-shadow: 0 10px 34px rgb(198 255 0 / 16%);
+}
+.hero .btn:hover {
+  box-shadow: 0 14px 44px rgb(198 255 0 / 28%);
+}
+.modality-card,
+.plan-card,
+.stats-grid .stat-card {
+  transition: transform .3s cubic-bezier(.2,.7,.2,1), border-color .3s ease, box-shadow .3s ease;
+}
+.modality-card:hover {
+  box-shadow: 0 18px 46px rgb(0 0 0 / 22%);
+}
+.modality-card h3 {
+  margin-bottom: 8px;
+  font-size: 25px;
+  letter-spacing: -.015em;
+}
+.modality-card .chip {
+  border-color: #3a3b40;
+  background: rgb(255 255 255 / 3%);
+}
+.plan-card:hover {
+  transform: translateY(-4px);
+  border-color: #55565c;
+}
+.plan-card.featured:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 70px rgb(198 255 0 / 13%);
+}
+.stats-grid .stat-card {
+  position: relative;
+  overflow: hidden;
+}
+.stats-grid .stat-card::after {
+  content: "";
+  position: absolute;
+  right: -30px;
+  bottom: -38px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(198 255 0 / 12%), transparent 68%);
+  pointer-events: none;
+}
+.trial-section {
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 4%);
+}
+@media (max-width: 800px) {
+  .admin-sidebar {
+    overflow: hidden;
+  }
+  .admin-sidebar nav {
+    padding-right: 2px;
+  }
+  .admin-user {
+    padding-bottom: 4px;
+  }
+  .admin-settings-tab fieldset {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+  .admin-settings-tab fieldset > legend,
+  .admin-settings-tab fieldset > p,
+  .admin-settings-tab fieldset > .admin-image-field,
+  .admin-settings-tab fieldset > .admin-accent-preview,
+  .admin-settings-tab fieldset > .admin-image-hint,
+  .admin-settings-tab fieldset > .opening-hours-editor,
+  .admin-settings-tab fieldset > .exception-row,
+  .admin-settings-tab fieldset > .admin-danger-button,
+  .admin-settings-tab fieldset > .admin-icon-button {
+    grid-column: 1;
+  }
+  .admin-main {
+    padding: 70px 16px 28px;
+  }
+}
