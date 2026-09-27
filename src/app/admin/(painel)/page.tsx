@@ -72,8 +72,32 @@ export default async function AdminDashboard() {
       <div className="admin-heading">
         <span>PAINEL</span>
         <h1>Visão geral</h1>
+        <p className="admin-page-hint">Acompanhe leads, conversões e os principais sinais de contato do site.</p>
       </div>
-      {recent.length === 0 ? <div className="admin-empty-state"><div><strong>Nenhum lead ainda</strong><p>Teste o formulário para ver o fluxo de conversão.</p><Link className="btn" href="/aula-experimental">TESTAR FORMULÁRIO</Link></div><div><strong>Compartilhe o site</strong><p>Copie a URL pública para enviar ao cliente.</p><CopyUrlButton url="https://viremarca-academia-1.vercel.app" /></div></div> : null}\n      <div className="admin-panel"><h2>Atalhos</h2><div className="admin-shortcuts"><Link href="/admin/hero">Editar hero</Link><Link href="/admin/planos">Planos</Link><Link href="/admin/horarios">Horários</Link><Link href="/" target="_blank">Ver site ↗</Link></div></div>\n      <div className="admin-cards">
+      {recent.length === 0 ? (
+        <div className="admin-empty-state">
+          <div>
+            <strong>Nenhum lead ainda</strong>
+            <p>Teste o formulário para ver o fluxo de conversão.</p>
+            <Link className="btn" href="/aula-experimental">TESTAR FORMULÁRIO</Link>
+          </div>
+          <div>
+            <strong>Compartilhe o site</strong>
+            <p>Copie a URL pública para enviar ao cliente.</p>
+            <CopyUrlButton url="https://viremarca-academia-1.vercel.app" />
+          </div>
+        </div>
+      ) : null}
+      <div className="admin-panel">
+        <h2>Atalhos</h2>
+        <div className="admin-shortcuts">
+          <Link href="/admin/hero">Editar hero</Link>
+          <Link href="/admin/planos">Planos</Link>
+          <Link href="/admin/horarios">Horários</Link>
+          <Link href="/" target="_blank">Ver site ↗</Link>
+        </div>
+      </div>
+      <div className="admin-cards">
         {cards.map(([label, value]) => (
           <article key={label}>
             <strong>{value}</strong>

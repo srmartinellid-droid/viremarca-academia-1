@@ -16,9 +16,10 @@ export default async function GaleriaPage() {
   ]);
 
   return (
-    <section>
+    <section className="admin-resource-page">
       <div className="admin-heading">
-        <div><span>CONTEÚDO</span><h1>Galeria</h1></div>
+        <div><span>CONTEÚDO</span><h1>Estrutura</h1>
+        <p className="admin-page-hint">Gerencia as imagens da estrutura exibidas no site.</p></div>
         <GalleryForm choices={choices} />
       </div>
       {rows.map((row) => (

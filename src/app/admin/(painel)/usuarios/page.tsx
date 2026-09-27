@@ -11,7 +11,8 @@ export default async function UsuariosPage() {
   const rows = await db.select().from(user).orderBy(asc(user.name));
   return (
     <section>
-      <div className="admin-heading"><div><span>CONTA</span><h1>Usuários</h1></div></div>
+      <div className="admin-heading"><div><span>CONTA</span><h1>Usuários</h1>
+        <p className="admin-page-hint">Gerencie os usuários do painel e seus níveis de acesso.</p></div></div>
       <UserForm />
       <div className="admin-table">
         {rows.map((item) => (

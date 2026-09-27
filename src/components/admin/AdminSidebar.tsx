@@ -11,7 +11,7 @@ type Props = { email: string; role: "owner" | "staff" };
 const contentLinks = [
   ["/admin/hero", "Hero"], ["/admin/secoes", "Seções"], ["/admin/modalidades", "Modalidades"],
   ["/admin/horarios", "Horários"], ["/admin/planos", "Planos"], ["/admin/equipe", "Equipe"],
-  ["/admin/galeria", "Galeria"], ["/admin/publicacoes", "Publicações"], ["/admin/depoimentos", "Depoimentos"],
+  ["/admin/galeria", "Estrutura"], ["/admin/publicacoes", "Publicações"], ["/admin/depoimentos", "Depoimentos"],
   ["/admin/faq", "FAQ"], ["/admin/numeros", "Números"], ["/admin/midia", "Mídia"],
 ] as const;
 

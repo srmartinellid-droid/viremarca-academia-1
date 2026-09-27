@@ -6,8 +6,9 @@ export default async function AccountPage() {
   return (
     <section>
       <div className="admin-heading">
-        <span>SEGURANÇA</span>
+        <span>CONTA</span>
         <h1>Conta</h1>
+        <p className="admin-page-hint">Gerencie seus dados de acesso e as ações de segurança da sua conta.</p>
       </div>
       <AccountClient />
     </section>

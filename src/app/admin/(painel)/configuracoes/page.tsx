@@ -16,7 +16,8 @@ export default async function SettingsPage() {
 
   return (
     <section>
-      <div className="admin-heading"><div><span>SITE</span><h1>Configurações</h1></div></div>
+      <div className="admin-heading"><div><span>SITE</span><h1>Configurações</h1>
+        <p className="admin-page-hint">Controla identidade, contato, endereço, funcionamento, redes e opções gerais do site.</p></div></div>
       <SettingsForm choices={choices} initial={{
         name: settings.name,
         slogan: settings.slogan || "",

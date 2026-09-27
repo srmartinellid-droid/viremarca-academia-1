@@ -16,9 +16,10 @@ export default async function PublicacoesPage() {
     getImageChoices(),
   ]);
   return (
-    <section>
+    <section className="admin-resource-page">
       <div className="admin-heading">
-        <div><span>CONTEÚDO</span><h1>Publicações</h1></div>
+        <div><span>CONTEÚDO</span><h1>Publicações</h1>
+        <p className="admin-page-hint">Cria e edita publicações do blog, usadas para conteúdo e SEO do site.</p></div>
         <PostForm categories={categories as unknown as Array<Record<string, unknown>>} choices={choices} />
       </div>
       {rows.map((row) => (
