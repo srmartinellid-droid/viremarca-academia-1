@@ -16,15 +16,15 @@ const schema = z.object({
 export async function updateLeadStatus(formData: FormData) {
   const actor = await assertRole("staff");
   const intent = String(formData.get("intent") || "update");
-  const id = String(formData.get("id") || "");
+  const leadId = String(formData.get("id") || "");
 
   if (intent === "delete") {
-    const idSchema = z.string().uuid().safeParse(id);
+    const idSchema = z.string().uuid().safeParse(leadId);
     if (!idSchema.success) return;
-    const current = (await db.select({ id: leads.id }).from(leads).where(eq(leads.id, id)).limit(1))[0];
+    const current = (await db.select({ id: leads.id }).from(leads).where(eq(leads.id, leadId)).limit(1))[0];
     if (!current) return;
-    await db.delete(leads).where(eq(leads.id, id));
-    await db.insert(auditLog).values({ actorId: actor.id, action: "delete", entity: "lead", entityId: id });
+    await db.delete(leads).where(eq(leads.id, leadId));
+    await db.insert(auditLog).values({ actorId: actor.id, action: "delete", entity: "lead", entityId: leadId });
     revalidatePath("/admin/leads");
     revalidatePath("/admin");
     return;
