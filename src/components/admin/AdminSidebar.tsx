@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { SignOutButton } from "./SignOutButton";
 
@@ -21,17 +21,26 @@ export function AdminSidebar({ email, role }: Props) {
   const owner = role === "owner";
   const close = () => setOpen(false);
   const active = (href: string) => pathname === href || pathname.startsWith(href + "/");
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open]);
   const link = (href: string, label: string) => (
     <Link className={active(href) ? "is-active" : ""} href={href} onClick={close} key={href}>{label}</Link>
   );
 
   return (
     <>
-      <button className="admin-menu-button" type="button" onClick={() => setOpen(!open)}>{open ? "Fechar" : "Menu"}</button>
+      <button className="admin-menu-button" type="button" aria-expanded={open} aria-controls="admin-navigation" onClick={() => setOpen(!open)}>{open ? "Fechar" : "Menu"}</button>
       {open ? <button className="admin-drawer-backdrop" type="button" aria-label="Fechar menu" onClick={close} /> : null}
       <aside className={open ? "admin-sidebar is-open" : "admin-sidebar"}>
         <strong>ACADEMIA DEMO</strong>
-        <nav>
+        <nav id="admin-navigation" aria-label="Navegação administrativa">
           <span>CONVERSÃO</span>{link("/admin", "Dashboard")}{link("/admin/leads", "Leads")}
           <span>CONTEÚDO</span>{contentLinks.map(([href, label]) => link(href, label))}
           <span>CONTA</span>
