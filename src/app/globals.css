@@ -920,8 +920,15 @@ h3 {
 .lead-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
   margin-top: 12px;
+}
+.lead-update-form {
+  display: flex;
+  flex: 1 1 420px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 .lead-actions select,
 .lead-actions input {

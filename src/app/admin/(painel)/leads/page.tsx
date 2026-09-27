@@ -94,8 +94,9 @@ export default async function AdminLeads({
                   {lead.phone} · {lead.modality ?? "sem modalidade"} · {lead.preferredTime ?? "—"} ·{" "}
                   {lead.createdAt.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })}
                 </p>
-                <form action={updateLeadStatus} className="lead-actions">
-                  <input type="hidden" name="id" value={lead.id} />
+                <div className="lead-actions">
+                  <form action={updateLeadStatus} className="lead-update-form">
+                    <input type="hidden" name="id" value={lead.id} />
                   <select name="status" defaultValue={lead.status} aria-label="Status">
                     {Object.entries(STATUS).map(([key, label]) => (
                       <option key={key} value={key}>
@@ -108,7 +109,8 @@ export default async function AdminLeads({
                     placeholder="Nota (opcional)"
                     defaultValue={lead.notes ?? ""}
                   />
-                  <button className="btn small">Salvar</button>
+                    <button className="btn small">Salvar</button>
+                  </form>
                   <a
                     className="btn small secondary"
                     href={wa}
@@ -122,7 +124,7 @@ export default async function AdminLeads({
                     <input type="hidden" name="id" value={lead.id} />
                     <DeleteButton />
                   </form>
-                </form>
+                </div>
               </article>
             );
           })}
